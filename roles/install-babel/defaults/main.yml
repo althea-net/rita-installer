@@ -1,0 +1,3 @@
+---
+babel_repo: https://github.com/althea-mesh/babeld
+build_dir: "{{ansible_env.HOME}}/babeld"

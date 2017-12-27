@@ -1,0 +1,14 @@
+---
+# Sets up Babeld service on systemd systems
+
+- name: Template Babeld service file
+  template:
+    src: babeld.service
+    dest: /etc/systemd/system/
+  become: true
+
+- name: Set Babeld to run on startup
+  service:
+    name: babeld
+    enabled: true
+  become: true

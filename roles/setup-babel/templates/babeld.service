@@ -1,0 +1,14 @@
+# This is a systemd service for Babeld
+[Unit]
+Description=babeld
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+TimeoutStartSec=10s
+ExecStart=babeld -L /var/log/babeld.log -c /etc/babeld.conf
+KillSignal=/bin/kill -9 $MAINPID
+
+[Install]
+WantedBy=default.target

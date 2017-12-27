@@ -1,0 +1,14 @@
+---
+# Clones and installs babel from althea's repo
+
+- name: Clone Althea's branch of Babeld
+  git:
+   repo: "{{babel_repo}}"
+   version: master
+   dest: "{{build_dir}}"
+
+- name: Build and install Babeld
+  make:
+   chdir: "{{build_dir}}"
+   target: install
+  become: true

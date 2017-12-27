@@ -1,0 +1,11 @@
+---
+# Sets up an Althea exit node, which proxies traffic to the internet and bills for it
+
+- name: Install Althea exit
+  hosts: exit
+  roles:
+    - install-deps
+    - install-babel
+    - install-wireguard
+    - setup-babel
+    - setup-wireguard

@@ -1,0 +1,3 @@
+---
+# Installs the intermedary software and then creates bridges to a list of exit nodes over an internet connection
+# also installs firewall rules to ensure that traffic does not unintentionally exit.
