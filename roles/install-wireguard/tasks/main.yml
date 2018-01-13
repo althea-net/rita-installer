@@ -10,7 +10,13 @@
   when: ansible_distribution == 'Fedora'
 
 - include_tasks: rhel.yml
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - include_tasks: arch.yml
   when: ansible_distribution == 'Archlinux'
+
+- name: Ensure kernel module is loaded
+  modprobe:
+    name: wireguard
+    state: present
+  become: true

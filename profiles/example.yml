@@ -1,0 +1,5 @@
+wg_public_key:
+wg_private_key: 
+clients:
+   - pubkey:
+     ip: 172.168.63.63

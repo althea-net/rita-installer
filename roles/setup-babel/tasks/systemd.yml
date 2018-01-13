@@ -3,12 +3,14 @@
 
 - name: Template Babeld service file
   template:
-    src: babeld.service
-    dest: /etc/systemd/system/
+    src: babeld.service.j2
+    dest: /etc/systemd/system/babeld.service
   become: true
 
-- name: Set Babeld to run on startup
-  service:
+- name: Set babeld to run on startup
+  systemd:
+    daemon_reload: yes
     name: babeld
-    enabled: true
+    state: started
+    enabled: yes
   become: true

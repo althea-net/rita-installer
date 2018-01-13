@@ -7,7 +7,7 @@ After=network.target
 [Service]
 Type=simple
 TimeoutStartSec=10s
-ExecStart=babeld -L /var/log/babeld.log -c /etc/babeld.conf
+ExecStart=/usr/local/bin/babeld -L /var/log/babeld.log -c /etc/babeld.conf
 KillSignal=/bin/kill -9 $MAINPID
 
 [Install]

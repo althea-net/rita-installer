@@ -10,7 +10,7 @@
 - name: Fail on nonsystemd systems
   fail:
     msg: "No support for non systemd services, please add support for your init system!"
-  when: ansible_service_mgr is not systemd
+  when: "ansible_service_mgr != 'systemd'"
 
 - include_tasks: systemd.yml
 

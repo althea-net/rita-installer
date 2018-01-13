@@ -1,21 +1,39 @@
 ---
 # Sets up wireguard to run at boot with a given config
 
+- name: Make wireguard config dir
+  file:
+    path: /etc/wireguard
+    state: directory
+  become: true
+
 - name: Template wireguard config
   template:
     src: wgExit.conf.j2
     dest: /etc/wireguard/wgExit.conf
+    owner: root
+    mode: 500
   become: true
 
-- name: Fail on nonsystemd systems
-  fail:
-    msg: "No support for non systemd services, please add support for your init system!"
-  when: ansible_service_mgr is not systemd
+- name: Open firewall port
+  firewalld:
+    state: enabled
+    immediate: true
+    permanent: true
+    port: 51820/udp
+  become: true
 
-- name: Enable Wireguard service
+- name: Open firewall port
+  firewalld:
+    state: enabled
+    immediate: true
+    permanent: true
+    port: 51820/tcp
+  become: true
+
+- name: Start wireguard
   service:
     name: wg-quick@wgExit
     state: restarted
-    enabled: true
-  become: true
-  when: ansible_service_mgr is systemd
+    enabled: yes
+    become: true

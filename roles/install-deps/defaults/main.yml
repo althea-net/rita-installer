@@ -12,20 +12,25 @@ debian_deps:
   - essential
   - libncurses5-dev
   - git
+  - iptables-persistent
 
 centos_deps:
   - gcc
-  - gcc-c++
   - git
+  - make
 
 ubuntu_deps:
   - gcc-multilib
+  - git
+  - make
+  - iptables-persistent
 
 fedora_deps:
   - gcc
-  - gcc-c++
   - git
+  - make
 
 arch_deps:
   - gcc
   - git
+  - make

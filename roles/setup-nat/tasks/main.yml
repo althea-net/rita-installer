@@ -1,0 +1,26 @@
+---
+
+- name: Setup NAT rules
+  shell: |
+    iptables -t nat -A POSTROUTING -o {{ ansible_default_ipv4.interface }} -j MASQUERADE;
+    iptables -A FORWARD -i {{ ansible_default_ipv4.interface }} -o wgExit -m state --state RELATED,ESTABLISHED -j ACCEPT
+    iptables -A FORWARD -i wgExit -o {{ ansible_default_ipv4.interface }} -j ACCEPT
+  become: true
+
+- name: Ensure iptables runs on startup
+  service:
+    name: iptables
+    state: started
+    enabled: yes
+  become: true
+
+- name: Save iptables rules
+  shell: "service iptables save"
+  become: true
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansilbe_distribution == 'Fedora'
+
+- name: Save iptables rules
+  shell: "iptables-save > /etc/sysconfig/rules.v4"
+  become: true
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+

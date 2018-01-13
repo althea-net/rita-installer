@@ -30,7 +30,7 @@
     name: "{{item}}"
     state: latest
   with_items: "{{centos_deps}}"
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
   become: true
 
 - name: Install Archlinux Deps
