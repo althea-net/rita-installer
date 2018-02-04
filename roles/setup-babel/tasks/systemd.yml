@@ -6,11 +6,13 @@
     src: babeld.service.j2
     dest: /etc/systemd/system/babeld.service
   become: true
+  register: babel_service
 
 - name: Set babeld to run on startup
   systemd:
     daemon_reload: yes
     name: babeld
-    state: started
+    state: restarted
     enabled: yes
   become: true
+  when: babel_service | changed

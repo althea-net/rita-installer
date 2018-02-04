@@ -1,2 +1,4 @@
 *.retry
 hosts-*
+profiles/clatskine.yml
+profiles/test.yml
