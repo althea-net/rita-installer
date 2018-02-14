@@ -8,5 +8,6 @@
     - install-deps
     - install-babel
     - install-wireguard
+    - setup-wireguard-exit
     - setup-babel
-    - setup-wireguard
+    - setup-nat

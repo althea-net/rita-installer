@@ -1,12 +1,6 @@
 ---
 # Sets up the babeld as a system service
 
-- name: Template Babeld conf
-  template:
-    src: babeld.conf.j2
-    dest: /etc/babeld.conf
-  become: true
-
 - name: Fail on nonsystemd systems
   fail:
     msg: "No support for non systemd services, please add support for your init system!"
