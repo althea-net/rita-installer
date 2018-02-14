@@ -1,0 +1,14 @@
+wg_public_key:
+wg_private_key:
+exit_mesh_ip:
+internal_nat_ip:
+wg_port:
+clients:
+ - wg_pubkey:
+   internal_ip: 172.168.x.x
+   mesh_ip: fdee::dead:beef/128
+
+gateways:
+    - wg_pubkey:
+      mesh_ip:
+      port: 51821

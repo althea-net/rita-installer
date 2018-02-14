@@ -29,7 +29,7 @@
     state: enabled
     immediate: true
     permanent: true
-    port: 51820/udp
+    port: "{{wg_port}}/udp"
   become: true
 
 - name: Open Internal port TCP
@@ -37,7 +37,7 @@
     state: enabled
     immediate: true
     permanent: true
-    port: 51820/tcp
+    port: "{{wg_port}}/tcp"
   become: true
 
 - name: Open Gateway port UDP
