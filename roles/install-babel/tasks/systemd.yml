@@ -15,4 +15,3 @@
     state: restarted
     enabled: yes
   become: true
-  when: babel_service | changed
