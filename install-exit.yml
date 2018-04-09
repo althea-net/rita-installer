@@ -9,4 +9,3 @@
     - install-babel
     - install-wireguard
     - install-rita-exit
-    - setup-nat

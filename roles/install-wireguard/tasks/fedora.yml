@@ -6,7 +6,7 @@
 
 - name: Install wireguard
   dnf:
-    name: "{{item}}-{{wireguard_version}}"
+    name: "{{item}}{{wireguard_version}}"
   become: true
   allow_downgrade: true
   with_items:

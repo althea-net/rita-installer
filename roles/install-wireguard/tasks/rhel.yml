@@ -14,7 +14,7 @@
 
 - name: Install wireguard
   yum:
-    name: "{{item}}-{{wireguard_version}}"
+    name: "{{item}}{{wireguard_version}}"
   allow_downgrade: true
   become: true 
   with_items:
