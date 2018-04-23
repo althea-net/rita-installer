@@ -1,4 +1,4 @@
-db_file = "{{database_dir}}"
+db_file = "{{database_dir}}exit.db"
 
 [payment]
 pay_threshold = "0"
@@ -20,11 +20,14 @@ wg_public_key = "{{wg_public_key}}"
 wg_start_port = {{wg_start_port}}
 peer_interfaces = []
 manual_peers = []
+external_nic = "{{external_nic}}"
+conf_link_local = true
+default_route = []
 
 [exit_network]
-wg_tunnel_port = {{wg_start_port}}
-external_nic = "{{external_nic}}"
+wg_tunnel_port = {{firewall_start_port}}
 exit_hello_port = "{{exit_registration_port}}"
+exit_start_ip = "172.168.0.100"
 exit_price = 50
 own_internal_ip = "{{internal_nat_ip}}"
 netmask = "{{internal_netmasq}}"

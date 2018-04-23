@@ -13,6 +13,7 @@ debian_deps:
   - libssl
 
 centos_deps:
+  - iptables-services
   - git
   - openssl
 
@@ -22,6 +23,7 @@ ubuntu_deps:
   - libssl
 
 fedora_deps:
+  - iptables-services
   - git
   - openssl
 

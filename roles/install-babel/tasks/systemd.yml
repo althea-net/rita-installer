@@ -1,6 +1,31 @@
 ---
 # Sets up Babeld service on systemd systems
 
+- name: Disable firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+  become: true
+  ignore_errors: true
+
+- name: Check iptables status
+  service:
+    name: "{{item}}"
+    state: started
+    enabled: yes
+  becime: true
+  with_items:
+    - iptables
+    - ip6tables
+
+- name: save iptables rules
+  shell: "service {{item}} save"
+  become: true
+  with_items:
+    - iptables
+    - ip6tables
+
 - name: Template Babeld service file
   template:
     src: babeld.service.j2

@@ -1,0 +1,37 @@
+---
+# Lock down the rest of the system and handle various potential attacks
+
+- name: Allow already open connections
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
+
+- name: Open ssh port
+  iptables:
+    chain: INPUT
+    destination_port: "22"
+    protocol: "tcp"
+    ip_version: "{{item}}"
+    jump: ACCEPT
+    ctstate: NEW
+  become: true
+  with_items:
+    - ipv4
+    - ipv6
+
+- name: Lock down input chain
+  iptables:
+    chain: INPUT
+    policy: DROP
+  become: true
+
+## TODO block ICMP spam attacks, DDOS style attacks etc https://javapipe.com/ddos/blog/iptables-ddos-protection/
+
+- name: save iptables rules
+  shell: "service {{item}} save"
+  become: true
+  with_items:
+    - iptables
+    - ip6tables

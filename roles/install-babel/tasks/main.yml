@@ -6,6 +6,19 @@
     mode: 0755
   become: true
 
+- name: Open Babeld port
+  iptables:
+    chain: INPUT
+    destination_port: "{{babeld_port}}"
+    protocol: "{{item[0]}}"
+    ip_version: "{{item[1]}}"
+    jump: ACCEPT
+    ctstate: NEW
+  become: true
+  with_nested:
+    - ["tcp", "udp"]
+    - ["ipv4", "ipv6"]
+
 - name: Fail on nonsystemd systems
   fail:
     msg: "No support for non systemd services, please add support for your init system!"

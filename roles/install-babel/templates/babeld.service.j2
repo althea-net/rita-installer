@@ -7,7 +7,8 @@ After=wiregaurd.service
 [Service]
 Type=simple
 TimeoutStartSec=10s
-ExecStart=/usr/local/bin/babeld -G 6872 -d1 -h1 -c /etc/babeld.conf lo
+ExecStartPre=-/usr/bin/rm /var/run/babeld.pid
+ExecStart=/usr/bin/babeld -G 6872 -d1 -h1 lo
 
 [Install]
 WantedBy=default.target
