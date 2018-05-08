@@ -1,0 +1,69 @@
+---
+# Sets up the babeld as a system service
+
+- name: Copy rita binary
+  copy:
+    src: rita
+    dest: /usr/bin/rita
+    mode: 0755
+  become: true
+
+- name: Create database dir
+  file:
+    path: "{{database_dir}}"
+    state: directory
+  become: true
+
+- name: Check for database
+  stat:
+    path: "{{database_dir}}/exit.db"
+  become: true
+  register: database
+
+- name: Copy empty db
+  copy:
+    src: blankdb.db
+    dest: "{{database_dir}}/exit.db"
+  backup: yes
+  become: true
+  when: database.stat.isfile is not defined
+
+- name: Copy the rita config
+  template:
+    src: rita.toml.j2
+    dest: /etc/rita.toml
+  become: true
+
+- name: Fail on nonsystemd systems
+  fail:
+    msg: "No support for non systemd services, please add support for your init system!"
+  when: "ansible_service_mgr != 'systemd'"
+
+- include_tasks: systemd.yml
+
+- name: Open Rita port
+  iptables:
+    chain: INPUT
+    protocol: "{{item[0]}}"
+    destination_port: "{{item[1]}}"
+    jump: ACCEPT
+    ip_version: "{{item[2]}}"
+    ctstate: NEW
+  become: true
+  with_nested:
+    - ["tcp", "udp"]
+    - ["{{rita_port}}", "{{bounty_port}}", "{{exit_registration_port}}"]
+    - ["ipv4", "ipv6"]
+
+- name: Open WireGuard port range
+  iptables:
+    chain: INPUT
+    destination_port: "{{firewall_start_port}}:"
+    protocol: udp
+    ip_version: "{{item}}"
+    jump: ACCEPT
+    ctstate: NEW
+  become: true
+  with_items:
+    - ipv4
+    - ipv6

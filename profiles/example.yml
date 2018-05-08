@@ -1,8 +1,8 @@
-wg_public_key:
-wg_private_key:
-exit_mesh_ip:
-internal_nat_ip:
-internal_netmasq:
-external_nic:
+mesh_interfaces:
+   - ethA
+   - ethB
+exit_internal_ip: fd96::1337:0e1f
+exit_server_address: test.altheamesh.com
+lan_interface: ethx
 wg_port: 51820
 wireguard_version: 0.0.20180304

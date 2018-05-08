@@ -1,0 +1,14 @@
+# This is a systemd service for Rita
+[Unit]
+Description=rita
+Requires=network.target
+After=babeld.service
+
+[Service]
+Type=simple
+TimeoutStartSec=10s
+Environment=RUST_LOG=INFO
+ExecStart=/usr/bin/rita --config /etc/rita.toml
+
+[Install]
+WantedBy=default.target

@@ -1,2 +1,12 @@
 ---
 # Installs the required software for an Althea intermediary node
+
+- name: Install Althea exit
+  hosts: intermediary
+  user: root
+  roles:
+    - install-deps
+    - install-babel
+    - install-wireguard
+    - install-rita
+    - security

@@ -5,9 +5,8 @@ firmware](https://github.com/althea-mesh/althea-firmware) which is targeted at
 OpenWRT compatible routers this installer will work on normal deskop and server
 Linux distributions.
 
-Eventually we will publish more traditional packages, in the meantime this
-clones and builds the latest release of various Althea components locally. So
-to update Althea just run the deployment script again.
+Eventually we will publish more traditional packages, right now this takes binaries
+that you build and sets them up on a remote machine. 
 
 ----------------
 
@@ -25,17 +24,42 @@ Getting Started
 First off you need a Linux machine with Ansible.
 
 On Ubuntu and Debian:
-> sudo apt install python-pip
+> sudo apt install python-pip libsqlite3-dev libssl-dev build-essential
 
 > sudo pip install ansible
 
 On Fedora:
-> sudo dnf install ansible
+> sudo dnf install ansible sqllite3-devel openssl-devel gcc
 
 On Centos and RHEL:
-> sudo yum install ansible
+> sudo yum install ansible sqllite3-devel openssl-devel gcc
 
 All other required software will be installed by the setup playbook
+
+Install [Rust](https://www.rustup.rs) and add Rustup to your path 
+
+Building the binaries
+-----------------------
+
+As there are currently no release binaries for desktop you'll have to build rita, rita_exit
+and Babeld yoruself. It's not very hard. 
+
+> git clone https://github.com/althea-mesh/babeld
+> cd babeld
+> git checkout pre-0.1.0
+> make
+
+You now have a babeld binary, put it in the same folder as the install playbooks
+
+> git clone https://github.com/althea-mesh/althea_rs
+> cd althea_rs
+> git checkout pre-0.1.0
+> cargo build --all
+> cp target/debug/rita .
+> cp target/debug/rita_exit .
+
+Now you have the Rita and Rita exit binaries, put these in the same foldder as the
+install playbooks. 
 
 Setting up an Exit server
 -------------------------
@@ -43,16 +67,7 @@ Setting up an Exit server
 An Althea Exit server is essentially a WireGuard proxy server setup to integrate
 with the mesh network.
 
-To allow Babel to handle negotiation all the way up to the exit server 'gateway'
-devices created a tunnel over the internet to the exit server, this tunnel is
-used to run Babel. In this way multiple gateways can operate in one mesh and traffic
-will be sent to the best possible route for the exit server.
-
-This results in the major quirk of the current exit setup, while gateways dial
-out to the exit server, regular client devices are polled by the exit server
-not the other way around. This is because WireGuard doesn't like nested tunnels.
-
-Regardless create a file named `hosts` and populate it with the ip addreses
+Create a file named `hosts` and populate it with the ip addreses
 of your exit server like so.
 
 >[exit]
@@ -63,10 +78,7 @@ You can then put some sort of load balancer in front of multiple servers. Option
 of course.
 
 Profiles are variables files pulled into Ansible for easy customization of what
-the playbook will do. Edit `profiles/example.yml' to match your needs. You may
-notice that the Althea firmware repo and the gateway, user, and intermediary install
-playbooks in this repo produce a short list of yaml variables required by the exit
-that can be simply copy pasted into the users/gateways lists.
+the playbook will do. Edit `profiles/exit-example.yml' to match your needs.
 
 Once configured run
 
@@ -74,5 +86,30 @@ Once configured run
 
 To update the users or gateways list simply run again. Users should not be disrupted
 unless a new gateway was added. Even then the disruption should be very minor.
+
+Setting up an Althea node
+-------------------------
+
+An Althea intermediary node will pass traffic for other users on the mesh 
+as well as provide secure internet acces over the mesh from a configured lan
+port. 
+
+Create a file named `hosts` and populate it with the ip addreses
+of your exit server like so.
+
+>[intermediary]
+>server a
+>server b
+
+Profiles are variables files pulled into Ansible for easy customization of what
+the playbook will do. Edit `profiles/example.yml' to match your needs.
+
+Once configured run
+
+> ansible-playbook -e profiles/profile-name.yml install-intermediary.yml
+
+To update the Rita version just run again after building a new binary and placing
+it in the same folder as the playbook
+
 
 
