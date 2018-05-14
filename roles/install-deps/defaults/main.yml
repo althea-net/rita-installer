@@ -11,22 +11,32 @@ debian_deps:
   - git
   - iptables-persistent
   - libssl
+  - iproute
+  - ebtables
 
 centos_deps:
   - iptables-services
   - git
   - openssl
+  - iproute
+  - ebtables
 
 ubuntu_deps:
   - git
   - iptables-persistent
   - libssl
+  - iproute
+  - ebtables
 
 fedora_deps:
   - iptables-services
   - git
   - openssl
+  - iproute
+  - ebtables
 
 arch_deps:
   - git
   - openssl
+  - iproute
+  - ebtables

@@ -8,7 +8,7 @@ After=babeld.service
 Type=simple
 TimeoutStartSec=10s
 Environment=RUST_LOG=INFO
-ExecStart=/usr/bin/rita --config /etc/rita.toml
+ExecStart=/usr/bin/rita --config=/etc/rita.toml --platform=linux
 
 [Install]
 WantedBy=default.target
