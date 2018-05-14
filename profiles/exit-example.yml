@@ -6,3 +6,4 @@ internal_netmasq: "16"
 external_nic: "eth0"
 firewall_start_port: "{{ wg_start_port | int -1 }}"
 wireguard_version: -0.0.20180304
+allowed_country_codes: "[]"
