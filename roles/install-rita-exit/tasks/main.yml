@@ -1,12 +1,26 @@
 ---
 # Sets up the babeld as a system service
 
+- name: Check for Rita Exit bianry
+  local_action: stat path="{{playbook_dir}}/rita_exit"
+  register: rita_exit_bin
+
+- name: Rita bin not present, download latest release
+  get_url:
+    url: "{{rita_exit_bin_url}}"
+    dest: "/usr/bin/rita_exit"
+    mode: 0755
+    force: true
+  become: true
+  when: not rita_exit_bin.stat.exists
+
 - name: Copy rita-exit binary
   copy:
-    src: rita_exit
+    src: "{{playbook_dir}}/rita_exit"
     dest: /usr/bin/rita_exit
     mode: 0755
   become: true
+  when: rita_exit_bin.stat.exists
 
 - name: Create database dir
   file:
@@ -21,12 +35,12 @@
   register: database
 
 - name: Copy empty db
-  copy:
-    src: blankdb.db
+  get_url:
+    url:  "{{blank_db_url}}"
     dest: "{{database_dir}}/exit.db"
   backup: yes
   become: true
-  when: database.stat.isfile is not defined
+  when: not database.stat.exists
 
 - name: Copy the rita-exit config
   template:

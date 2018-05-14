@@ -1,9 +1,9 @@
 ---
 
 - name: Install wireguard
-  pacman:
-    name: "{{item}}"
-    state: present
+  apt:
+    name: "{{item}}{{wireguard_version}}"
+    update_cache: yes
   become: true
   with_items:
     - wireguard-dkms

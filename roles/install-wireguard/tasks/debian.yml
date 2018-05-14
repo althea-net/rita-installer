@@ -1,7 +1,8 @@
 ---
 
 - name: Enable Debian Unstable
-  repo: deb http://deb.debian.org/debian/ unstable main
+  apt_repository:
+    repo: deb http://deb.debian.org/debian/ unstable main
     state: present
   become: true
 
@@ -19,7 +20,7 @@
   apt:
     name: "{{item}}{{wireguard_version}}"
     update_cache: yes
-  become: true 
+  become: true
   with_items:
     - wireguard-dkms
     - wireguard-tools

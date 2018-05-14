@@ -40,3 +40,7 @@
     state: restarted
     enabled: yes
   become: true
+
+- name: Set log retention values
+  command: "journalctl --vacuum-size=500M"
+  become: true

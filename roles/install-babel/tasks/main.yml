@@ -1,10 +1,24 @@
 ---
+- name: Check for Babel bianry
+  local_action: stat path="{{playbook_dir}}/babeld"
+  register: babeld_bin
+
+- name: Babel bin not present, download latest release
+  get_url:
+    url: "{{babeld_bin_url}}"
+    dest: "/usr/bin/babled"
+    mode: 0755
+    force: true
+  become: true
+  when: not babeld_bin.stat.exists
+
 - name: Copy over babled
   copy:
-    src: babeld
+    src: "{{playbook_dir}}/babeld"
     dest: /usr/bin/babeld
     mode: 0755
   become: true
+  when: babeld_bin.stat.exists
 
 - name: Open Babeld port
   iptables:

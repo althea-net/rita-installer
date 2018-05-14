@@ -1,32 +1,26 @@
 ---
 # Sets up the babeld as a system service
 
+- name: Check for Rita bianry
+  local_action: stat path="{{playbook_dir}}/rita"
+  register: rita_bin
+
+- name: Rita bin not present, download latest release
+  get_url:
+    url: "{{rita_bin_url}}"
+    dest: "/usr/bin/rita"
+    mode: 0755
+    force: true
+  become: true
+  when: not rita_bin.stat.exists
+
 - name: Copy rita binary
   copy:
-    src: rita
+    src: "{{playbook_dir}}/rita"
     dest: /usr/bin/rita
     mode: 0755
   become: true
-
-- name: Create database dir
-  file:
-    path: "{{database_dir}}"
-    state: directory
-  become: true
-
-- name: Check for database
-  stat:
-    path: "{{database_dir}}/exit.db"
-  become: true
-  register: database
-
-- name: Copy empty db
-  copy:
-    src: blankdb.db
-    dest: "{{database_dir}}/exit.db"
-  backup: yes
-  become: true
-  when: database.stat.isfile is not defined
+  when: rita_bin.stat.exists
 
 - name: Copy the rita config
   template:

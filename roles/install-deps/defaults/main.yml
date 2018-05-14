@@ -24,7 +24,8 @@ centos_deps:
 ubuntu_deps:
   - git
   - iptables-persistent
-  - libssl
+  - libssl-dev
+  - libsqlite3-dev
   - iproute
   - ebtables
 
