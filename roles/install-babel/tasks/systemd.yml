@@ -14,7 +14,7 @@
     name: "{{item}}"
     state: started
     enabled: yes
-  becime: true
+  become: true
   with_items:
     - iptables
     - ip6tables
@@ -44,3 +44,22 @@
 - name: Set log retention values
   command: "journalctl --vacuum-size=500M"
   become: true
+
+- name: Wait for Quick crashes
+  pause:
+    seconds: 30
+
+- name: Check if Babeld is running
+  command: systemctl status babeld
+  ignore_errors: yes
+  changed_when: false
+  register: babeld_status
+
+- name: Report status of Babeld
+  fail:
+    msg: |
+      Service babeld is not running.
+      Output of `systemctl status babeld`:
+      {{ service_apache_status.stdout }}
+      {{ service_apache_status.stderr }}
+  when: babeld_status is failed

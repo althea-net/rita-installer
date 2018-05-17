@@ -22,6 +22,14 @@
   become: true
   when: rita_bin.stat.exists
 
+- name: Stop the process to update config
+  systemd:
+    name: rita-exit
+    state: stopped
+    enabled: yes
+  become: true
+  ignore_errors: true
+
 - name: Copy the rita config
   template:
     src: rita.toml.j2

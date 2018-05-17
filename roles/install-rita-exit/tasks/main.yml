@@ -38,9 +38,17 @@
   get_url:
     url:  "{{blank_db_url}}"
     dest: "{{database_dir}}/exit.db"
-  backup: yes
+    backup: yes
   become: true
   when: not database.stat.exists
+
+- name: Stop the process to update config
+  systemd:
+    name: rita-exit
+    state: stopped
+    enabled: yes
+  become: true
+  ignore_errors: true
 
 - name: Copy the rita-exit config
   template:

@@ -6,7 +6,7 @@
 - name: Babel bin not present, download latest release
   get_url:
     url: "{{babeld_bin_url}}"
-    dest: "/usr/bin/babled"
+    dest: "/usr/bin/babeld"
     mode: 0755
     force: true
   become: true

@@ -40,3 +40,22 @@
     state: restarted
     enabled: yes
   become: true
+
+- name: Wait for Quick crashes
+  pause:
+    seconds: 30
+
+- name: Check if Rita-exit is running
+  command: systemctl status rita-exit
+  ignore_errors: yes
+  changed_when: false
+  register: rita_exit_status
+
+- name: Report status of Rita-exit
+  fail:
+    msg: |
+      Service rita-exit is not running.
+      Output of `systemctl status rita-exit`:
+      {{ service_apache_status.stdout }}
+      {{ service_apache_status.stderr }}
+  when: rita_exit_status is failed
