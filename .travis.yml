@@ -1,11 +1,11 @@
-language: ansible
+language: python
 before_install:
   - sudo apt-get -qq update
   - sudo pip install ansible-lint
 
 env:
-  - CONFIG=example.yml PLAYBOOK=install-intermediary.yml
-  - CONFIG=exit-example.yml PLAYBOOK=install-exit.yml
+  - CONFIG=example.yml PLAYBOOK=install-intermediary.yml OS_TYPE=centos OS_VERSION=7
+  - CONFIG=exit-example.yml PLAYBOOK=install-exit.yml OS_TYPE=centos OS_VERSION=7
 
 script:
   - ansible-lint -x ANSIBLE0012,ANSIBLE0013,ANSIBLE0006 *.yml
