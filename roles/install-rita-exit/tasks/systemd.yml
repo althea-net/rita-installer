@@ -56,6 +56,6 @@
     msg: |
       Service rita-exit is not running.
       Output of `systemctl status rita-exit`:
-      {{ service_apache_status.stdout }}
-      {{ service_apache_status.stderr }}
+      {{ service_rita_exit_status.stdout }}
+      {{ service_rita_exit_status.stderr }}
   when: rita_exit_status is failed
