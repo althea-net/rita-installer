@@ -21,6 +21,24 @@
     - ipv4
     - ipv6
 
+- name: Remove default drop rules
+  iptables:
+    chain: INPUT
+    jump: REJECT
+    reject_with: "icmp6-adm-prohibited"
+    ip_version: ipv6
+    state: absent
+  become: true
+
+- name: Remove default drop rules
+  iptables:
+    chain: INPUT
+    jump: REJECT
+    reject_with: "icmp-host-prohibited"
+    ip_version: ipv4
+    state: absent
+  become: true
+
 - name: Lock down input chain
   iptables:
     chain: INPUT
