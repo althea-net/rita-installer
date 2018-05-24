@@ -20,6 +20,12 @@
   become: true
   when: babeld_bin.stat.exists
 
+- name: Template babeld conf
+  template:
+    src: babeld.conf.j2
+    dest: /etc/babeld.conf
+  become: true
+
 - name: Open Babeld port
   iptables:
     chain: INPUT

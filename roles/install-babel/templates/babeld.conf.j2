@@ -1,0 +1,9 @@
+local-port-readwrite 6872
+debug 1
+default hello-interval 1
+default enable-timestamps true
+redistribute if lo deny
+redistribute eq 128 allow
+out eq 128 allow
+redistribute local deny
+
