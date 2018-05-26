@@ -22,5 +22,4 @@
     update_cache: yes
   become: true
   with_items:
-    - wireguard-dkms
-    - wireguard-tools
+    - wireguard
