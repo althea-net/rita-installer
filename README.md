@@ -53,11 +53,13 @@ You can then put some sort of load balancer in front of multiple servers. Option
 of course.
 
 Profiles are variables files pulled into Ansible for easy customization of what
-the playbook will do. Edit `profiles/exit-example.yml' to match your needs.
+the playbook will do. Edit `profiles/exit-example.yml' to match your needs. If you are
+running against localhost use the `-c local` option and put 'localhost' in your
+hosts file.
 
 Once configured run
 
-> ansible-playbook -e profiles/profile-name.yml install-exit.yml
+> ansible-playbook -e @profiles/<your profile name or exit-example.yml> install-exit.yml
 
 To update the users or gateways list simply run again. Users should not be disrupted
 unless a new gateway was added. Even then the disruption should be very minor.
@@ -77,11 +79,13 @@ of your exit server like so.
 >server b
 
 Profiles are variables files pulled into Ansible for easy customization of what
-the playbook will do. Edit `profiles/example.yml' to match your needs.
+the playbook will do. Edit `profiles/example.yml' to match your needs. If you are
+running against localhost use the `-c local` option and put 'localhost' in your
+hosts file.
 
 Once configured run
 
-> ansible-playbook -e profiles/profile-name.yml install-intermediary.yml
+> ansible-playbook -e @profiles/<your profile name or example.yml> install-intermediary.yml
 
 To update the Rita version just run again after building a new binary and placing
 it in the same folder as the playbook

@@ -26,7 +26,7 @@ ubuntu_deps:
   - iptables-persistent
   - libssl-dev
   - libsqlite3-dev
-  - iproute
+  - iproute2
   - ebtables
 
 fedora_deps:
