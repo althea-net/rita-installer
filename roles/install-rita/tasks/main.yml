@@ -69,3 +69,11 @@
   with_items:
     - ipv4
     - ipv6
+
+- name: Add dns servers
+  lineinfile:
+    dest: /etc/resolv.conf
+    line: "{{item}}"
+    state: present
+  become: true
+  with_items: "{{dns_servers}}" 

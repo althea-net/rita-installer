@@ -4,3 +4,6 @@ mesh_interfaces:
 lan_interface: ethx
 wg_port: 51820
 wireguard_version: ""
+dns_servers:
+   - "193.138.219.228"
+   - "162.242.211.137"
