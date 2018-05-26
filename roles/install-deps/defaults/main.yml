@@ -13,6 +13,7 @@ debian_deps:
   - libssl
   - iproute
   - ebtables
+  - ipset
 
 centos_deps:
   - iptables-services
@@ -20,6 +21,7 @@ centos_deps:
   - openssl
   - iproute
   - ebtables
+  - ipset
 
 ubuntu_deps:
   - git
@@ -27,6 +29,7 @@ ubuntu_deps:
   - libssl-dev
   - libsqlite3-dev
   - iproute2
+  - ipset
   - ebtables
 
 fedora_deps:
@@ -35,9 +38,11 @@ fedora_deps:
   - openssl
   - iproute
   - ebtables
+  - ipset
 
 arch_deps:
   - git
   - openssl
   - iproute
   - ebtables
+  - ipset
