@@ -1,10 +1,14 @@
 ---
 
+- name: Add wireguard repo
+  apt_repository:
+    repo: "ppa:wireguard/wireguard"
+  become: true
+
 - name: Install wireguard
   apt:
     name: "{{item}}{{wireguard_version}}"
     update_cache: yes
   become: true
   with_items:
-    - wireguard-dkms
-    - wireguard-tools
+    - wireguard
