@@ -1,9 +1,9 @@
-wg_public_key: "canhIr8gKk7vBU3hj6O4LRNJBWfSX0D6Qoutfr6h6H0="
-wg_private_key: "KBxMQ/BvoRrYaJaY+6wXLI9CF69wZR+uuZGDg/5QSUU="
-exit_mesh_ip: "fd96::1337:0e1f"
+#wg_public_key: "" # Define in hosts to deploy multiple exits at once
+#wg_private_key: "" # Define in hosts to deploy multiple exits at once
+#exit_mesh_ip: "" # Define in hosts to deploy multiple exits at once 
 internal_nat_ip: 172.168.0.254
 internal_netmasq: "16"
 external_nic: "eth0"
 firewall_start_port: "{{ wg_start_port | int -1 }}"
-wireguard_version: -0.0.20180304
+wireguard_version: ""
 allowed_country_codes: "[]"
