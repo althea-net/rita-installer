@@ -18,6 +18,7 @@
   with_items:
     - iptables
     - ip6tables
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
 
 - name: save iptables rules
   shell: "service {{item}} save"
@@ -25,6 +26,16 @@
   with_items:
     - iptables
     - ip6tables
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
+
+- name: save iptables rules
+  shell: "{{item}}"
+  become: true
+  with_items:
+    - "iptables-save > /etc/iptables/rules.v4"
+    - "ip6tables-save > /etc/iptables/rules.v6"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
 
 - name: Template Babeld service file
   template:
