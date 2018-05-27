@@ -1,7 +1,7 @@
 ---
 
 - name: Enable copr
-  shell: dnf copr enable jdoss/wireguard
+  shell: dnf copr enable -y jdoss/wireguard
   become: true
 
 - name: Install wireguard
