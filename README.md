@@ -79,7 +79,8 @@ of your exit server like so.
 >server b
 
 Profiles are variables files pulled into Ansible for easy customization of what
-the playbook will do. Edit `profiles/example.yml' to match your needs. If you are
+the playbook will do. Edit `profiles/example.yml` to match your needs. This should
+mostly just involve setting the correct interfaces for your machine. If you are
 running against localhost use the `-c local` option and put 'localhost' in your
 hosts file.
 
