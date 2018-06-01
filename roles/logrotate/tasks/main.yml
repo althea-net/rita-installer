@@ -1,0 +1,25 @@
+---
+# Handle log growth
+
+- name: Set log retention values for systemd
+  command: "journalctl --vacuum-size=500M"
+  become: true
+  ignore_errors: true
+
+- name: Template logrotate config
+  template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.conf
+  become: true
+
+- name: Run logrotate now
+  shell: "logrotate /etc/logrotate.conf"
+  become: true
+
+- name: Disable rsyslog
+  service:
+    name: rsyslog
+    state: stopped
+    enabled: false
+  become: true
+  ignore_errors: true

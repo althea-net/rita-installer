@@ -52,10 +52,6 @@
     enabled: yes
   become: true
 
-- name: Set log retention values
-  command: "journalctl --vacuum-size=500M"
-  become: true
-
 - name: Wait for Quick crashes
   pause:
     seconds: 30

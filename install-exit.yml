@@ -10,3 +10,4 @@
     - install-wireguard
     - install-rita-exit
     - security
+    - logrotate

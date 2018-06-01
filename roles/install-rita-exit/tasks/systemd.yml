@@ -41,7 +41,6 @@
     src: rita-exit.service.j2
     dest: /etc/systemd/system/rita-exit.service
   become: true
-  register: rita_exit_service
 
 - name: Set Rita-exit to run on startup
   systemd:

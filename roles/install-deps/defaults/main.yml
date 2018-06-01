@@ -14,6 +14,7 @@ debian_deps:
   - iproute
   - ebtables
   - ipset
+  - logrotate
 
 centos_deps:
   - iptables-services
@@ -22,6 +23,7 @@ centos_deps:
   - iproute
   - ebtables
   - ipset
+  - logrotate
 
 ubuntu_deps:
   - git
@@ -31,6 +33,7 @@ ubuntu_deps:
   - iproute2
   - ipset
   - ebtables
+  - logrotate
 
 fedora_deps:
   - iptables-services
@@ -39,6 +42,7 @@ fedora_deps:
   - iproute
   - ebtables
   - ipset
+  - logrotate
 
 arch_deps:
   - git
@@ -46,3 +50,4 @@ arch_deps:
   - iproute
   - ebtables
   - ipset
+  - logrotate
