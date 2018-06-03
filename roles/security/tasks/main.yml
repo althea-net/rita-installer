@@ -39,9 +39,24 @@
     state: absent
   become: true
 
+- name: Remove default drop rules
+  iptables:
+    chain: FORWARD
+    jump: REJECT
+    reject_with: "icmp-host-prohibited"
+    ip_version: ipv4
+    state: absent
+  become: true
+
 - name: Lock down input chain
   iptables:
     chain: INPUT
+    policy: DROP
+  become: true
+
+- name: Lock down forward chain
+  iptables:
+    chain: FORWARD
     policy: DROP
   become: true
 
