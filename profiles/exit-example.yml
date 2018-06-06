@@ -4,7 +4,7 @@
 #description: "" # Define in hosts to deploy multiple exits at once
 internal_nat_ip: 172.168.0.254
 internal_netmasq: "16"
-external_nic: "eth0"
+#external_nic: "enp5s0f1"
 firewall_start_port: "{{ wg_start_port | int -1 }}"
 wireguard_version: ""
-allowed_country_codes: "[]"
+#allowed_country_codes: "[]"

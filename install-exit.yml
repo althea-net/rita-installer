@@ -11,3 +11,4 @@
     - install-rita-exit
     - security
     - logrotate
+    - set-qdisc
