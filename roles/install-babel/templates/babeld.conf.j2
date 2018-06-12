@@ -2,8 +2,15 @@ local-port-readwrite 6872
 debug 1
 default hello-interval 1
 default enable-timestamps true
+{% if 'exit' in group_names %}
+out ip {{exit_mesh_ip}}/128 allow
+redistribute ip {{exit_mesh_ip}}/128 allow
+redistribute local deny
+redistribute deny
+out deny
+{% elif 'intermediary' in group_name %}
 redistribute if lo deny
 redistribute eq 128 allow
 out eq 128 allow
 redistribute local deny
-redistribute deny 
+{% endif %}
