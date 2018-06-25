@@ -66,6 +66,6 @@
     msg: |
       Service rita is not running.
       Output of `systemctl status rita`:
-      {{ service_apache_status.stdout }}
-      {{ service_apache_status.stderr }}
+      {{ service_rita_status.stdout }}
+      {{ service_rita_status.stderr }}
   when: service_rita_status is failed

@@ -67,6 +67,6 @@
     msg: |
       Service babeld is not running.
       Output of `systemctl status babeld`:
-      {{ service_apache_status.stdout }}
-      {{ service_apache_status.stderr }}
+      {{ babeld_status.stdout }}
+      {{ babeld_status.stderr }}
   when: babeld_status is failed
