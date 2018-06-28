@@ -68,7 +68,7 @@
   with_items:
     - iptables
     - ip6tables
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora'
 
 - name: save iptables rules
   shell: "{{item}}"

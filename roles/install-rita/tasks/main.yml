@@ -76,4 +76,4 @@
     line: "{{item}}"
     state: present
   become: true
-  with_items: "{{dns_servers}}" 
+  with_items: "{{dns_servers}}"
