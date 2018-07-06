@@ -18,6 +18,9 @@ wg_private_key = ""
 wg_private_key_path = "/tmp/priv"
 wg_public_key = ""
 wg_start_port = 60000
+{% if wan_interface is defined %}
+external_nic = "{{wan_interface}}"
+{% endif %}
 peer_interfaces = [{% for interface in mesh_interfaces %}"{{interface}}"{{ "," if not loop.last else "" }}{% endfor %}]
 manual_peers = ["test.altheamesh.com", "apac.altheamesh.com", "exit.altheamesh.com", "canada-east.altheamesh.com", "aus.altheamesh.com"]
 global_non_mesh_ip = ""

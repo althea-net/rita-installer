@@ -2,6 +2,7 @@ mesh_interfaces:
    - ethA
    - ethB
 lan_interface: ethx
+wan_interface: ethy
 wg_port: 51820
 wireguard_version: ""
 dns_servers:
