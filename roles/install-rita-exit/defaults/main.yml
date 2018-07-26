@@ -8,3 +8,4 @@ firewall_start_port: 59999
 rita_exit_bin_url: "https://github.com/althea-mesh/althea_rs/releases/download/v0.1.2/rita_exit"
 blank_db_url: "https://github.com/althea-mesh/althea_rs/releases/download/0.1.0/blankdb.db"
 allowed_country_codes: "[]"
+mailer: false

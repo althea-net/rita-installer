@@ -35,3 +35,15 @@ exit_start_ip = "172.168.0.100"
 exit_price = 50
 own_internal_ip = "{{internal_nat_ip}}"
 netmask = "{{internal_netmasq}}"
+
+{% if mailer %}
+[mailer]
+from_address = "{{email_address}}"
+email_cooldown = 100
+smtp_url = "{{smtp_url}}"
+smtp_domain = "{{smtp_domain}}"
+smtp_username = "{{smtp_username}}"
+smtp_password = "{{smtp_password}}"
+test = false
+test_dir = ""
+{% endif %}
