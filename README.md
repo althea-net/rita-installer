@@ -5,8 +5,8 @@ firmware](https://github.com/althea-mesh/althea-firmware) which is targeted at
 OpenWRT compatible routers this installer will work on normal deskop and server
 Linux distributions.
 
-Eventually we will publish more traditional packages, right now this takes binaries
-that you build and sets them up on a remote machine. 
+Eventually we will publish more traditional packages, right now this automates
+the installation process and system setup.
 
 ----------------
 
@@ -59,7 +59,7 @@ hosts file.
 
 Once configured run
 
-> ansible-playbook -e @profiles/<your profile name or exit-example.yml> <-c local if running against localhost> -i <your hosts file or ci-hosts> install-exit.yml
+> ansible-playbook -e @profiles/[your profile name or exit-example.yml] <-c local if running against localhost> -i <your hosts file or ci-hosts> install-exit.yml
 
 To update the users or gateways list simply run again. Users should not be disrupted
 unless a new gateway was added. Even then the disruption should be very minor.
@@ -69,7 +69,10 @@ Setting up an Althea node
 
 An Althea intermediary node will pass traffic for other users on the mesh 
 as well as provide secure internet acces over the mesh from a configured lan
-port. 
+port. This also includes gateway functionality if you include an external_nic
+in the profile.
+
+For anything you don't wish to configure (lan, wan, mesh) just provide an empty list. 
 
 Create a file named `hosts` and populate it with the ip addreses
 of your exit server like so.
@@ -86,7 +89,7 @@ hosts file.
 
 Once configured run
 
-> ansible-playbook -e @profiles/<your profile name or example.yml> <-c local if running against localhost> -i <your hosts file or ci-hosts>  install-intermediary.yml
+> ansible-playbook -e @profiles/[your profile name or example.yml] <-c local if running against localhost> -i <your hosts file or ci-hosts>  install-intermediary.yml
 
 To update the Rita version just run again after building a new binary and placing
 it in the same folder as the playbook
