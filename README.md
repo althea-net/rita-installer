@@ -75,7 +75,7 @@ in the profile.
 For anything you don't wish to configure (lan, wan, mesh) just provide an empty list. 
 
 Create a file named `hosts` and populate it with the ip addreses
-of your exit server like so.
+of your devices server like so. You can use 'localhost' for your local machine.
 
 >[intermediary]
 >server a

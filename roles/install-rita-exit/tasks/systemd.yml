@@ -58,7 +58,7 @@
   command: systemctl status rita-exit
   ignore_errors: yes
   changed_when: false
-  register: rita_exit_status
+  register: service_rita_exit_status
 
 - name: Report status of Rita-exit
   fail:
@@ -67,4 +67,4 @@
       Output of `systemctl status rita-exit`:
       {{ service_rita_exit_status.stdout }}
       {{ service_rita_exit_status.stderr }}
-  when: rita_exit_status is failed
+  when: service_rita_exit_status is failed

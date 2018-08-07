@@ -1,7 +1,7 @@
 ---
 # Installs the required software for an Althea intermediary node
 
-- name: Install Althea exit
+- name: Install Althea
   hosts: intermediary
   user: root
   roles:
