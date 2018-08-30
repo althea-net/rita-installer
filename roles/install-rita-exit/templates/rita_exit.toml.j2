@@ -47,3 +47,9 @@ smtp_password = "{{smtp_password}}"
 test = false
 test_dir = ""
 {% endif %}
+
+[dao]
+dao_enforcement = false
+cache_timeout_seconds = 600
+node_list = ["http://sasquatch.network:9545"]
+dao_addresses = []
