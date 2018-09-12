@@ -1,14 +1,14 @@
 # see "man logrotate" for details
-# rotate log files daily
-daily
+# rotate log files hourly
+hourly
 compress
 delaycompress
 
 # Rotate logs as root
 su root adm
 
-# keep 4 weeks worth of backlogs
-rotate 4
+# keep 1 day worth of backlogs
+rotate 1
 
 # create new (empty) log files after rotating old ones
 create
@@ -17,7 +17,6 @@ create
 dateext
 
 # uncomment this if you want your log files compressed
-#compress
 
 # RPM packages drop log rotation information into this directory
 include /etc/logrotate.d

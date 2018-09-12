@@ -1,4 +1,3 @@
----
 # Handle log growth
 
 - name: Set log retention values for systemd
@@ -16,10 +15,18 @@
   shell: "logrotate /etc/logrotate.conf"
   become: true
 
-- name: Disable rsyslog
+- name: Take off rsyslog rate limiting
+  lineinfile:
+    path: /etc/rsyslog.conf
+    line: "{{item}}"
+  with_items:
+    - "$SystemLogRateLimitInterval 2"
+    - "$SystemLogRateLimitBurst 500"
+
+- name: Restart rsyslog
   service:
     name: rsyslog
-    state: stopped
-    enabled: false
+    state: restarted
+    enabled: true
   become: true
   ignore_errors: true

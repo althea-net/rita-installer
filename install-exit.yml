@@ -1,4 +1,3 @@
----
 # Sets up an Althea exit node, which proxies traffic to the internet and bills for it
 
 - name: Install Althea exit
@@ -12,3 +11,4 @@
     - security
     - logrotate
     - set-qdisc
+    - { role: graylog, when: enterprise }
