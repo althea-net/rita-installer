@@ -1,10 +1,6 @@
-#wg_public_key: "" # Define in hosts to deploy multiple exits at once
-#wg_private_key: "" # Define in hosts to deploy multiple exits at once
-#exit_mesh_ip: "" # Define in hosts to deploy multiple exits at once 
-#description: "" # Define in hosts to deploy multiple exits at once
-internal_nat_ip: 172.168.0.254
-internal_netmasq: "16"
-#external_nic: "enp5s0f1"
-firewall_start_port: "{{ wg_start_port | int -1 }}"
-wireguard_version: ""
-#allowed_country_codes: "[]"
+wg_public_key: "" # Define in hosts to deploy multiple exits at once
+wg_private_key: "" # Define in hosts to deploy multiple exits at once
+exit_mesh_ip: "" # Define in hosts to deploy multiple exits at once
+description: "" # Define in hosts to deploy multiple exits at once
+external_nic: "" # Define in hosts to deploy multiple exits at once
+allowed_country_codes: "[]"
