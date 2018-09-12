@@ -1,4 +1,3 @@
----
 # Sets up the babeld as a system service
 
 - name: Check for Rita bianry
@@ -22,6 +21,11 @@
   become: true
   when: rita_bin.stat.exists
 
+- name: Fail on nonsystemd systems
+  fail:
+    msg: "No support for non systemd services, please add support for your init system!"
+  when: "ansible_service_mgr != 'systemd'"
+
 - name: Stop the process to update config
   systemd:
     name: rita-exit
@@ -35,11 +39,6 @@
     src: rita.toml.j2
     dest: /etc/rita.toml
   become: true
-
-- name: Fail on nonsystemd systems
-  fail:
-    msg: "No support for non systemd services, please add support for your init system!"
-  when: "ansible_service_mgr != 'systemd'"
 
 - include_tasks: systemd.yml
 
