@@ -15,6 +15,10 @@
   shell: "logrotate /etc/logrotate.conf"
   become: true
 
+- name: Move logrotate from daily to hourly
+  shell: "mv /etc/cron.daily/logrotate /etc/cron.hourly/"
+  ignore_errors: true
+
 - name: Take off rsyslog rate limiting
   lineinfile:
     path: /etc/rsyslog.conf
