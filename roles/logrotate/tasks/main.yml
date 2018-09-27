@@ -19,7 +19,7 @@
   shell: "mv /etc/cron.daily/logrotate /etc/cron.hourly/"
   ignore_errors: true
 
-- name: Take off rsyslog rate limiting
+- name: Reduce rsyslog rate limiting
   lineinfile:
     path: /etc/rsyslog.conf
     line: "{{item}}"
