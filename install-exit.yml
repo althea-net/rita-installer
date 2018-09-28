@@ -8,6 +8,8 @@
   - "30%"
   - "100%"
   max_fail_percentage: 10
+  vars:
+    enterprise: false
   roles:
     - install-deps
     - install-babel
