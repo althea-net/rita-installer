@@ -1,9 +1,6 @@
 [payment]
-pay_threshold = "0"
-close_threshold = "-1000000000"
-close_fraction = "100"
 buffer_period = 3
-eth_address = "0x0101010101010101010101010101010101010101"
+node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 
 [network]
 mesh_ip = "0.0.0.0"
@@ -78,5 +75,5 @@ email = "placeholder@domain.com"
 [dao]
 dao_enforcement = false
 cache_timeout_seconds = 600
-node_list = ["http://sasquatch.network:9545"]
+node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 dao_addresses = []
