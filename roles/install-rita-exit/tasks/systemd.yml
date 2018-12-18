@@ -42,10 +42,6 @@
     dest: /etc/systemd/system/rita-exit.service
   become: true
 
-- name: Wait to allow clients to reconverge after exit failure before restarting (TODO remove once fixed)
-  pause:
-    seconds: 200
-
 - name: Set Rita-exit to run on startup
   systemd:
     daemon_reload: yes
