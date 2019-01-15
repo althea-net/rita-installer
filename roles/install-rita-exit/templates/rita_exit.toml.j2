@@ -3,10 +3,12 @@ Description = "{{description}}"
 allowed_countries = {{allowed_country_codes}}
 
 [payment]
+local_fee = "{{exit_price_wei}}"
 eth_private_key = "{{eth_private_key}}"
 dynamic_fee_multiplier = {{fee_multiplier}}
 node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 buffer_period = 3
+price_oracle_enabled = false
 
 [network]
 mesh_ip = "{{exit_mesh_ip}}"
