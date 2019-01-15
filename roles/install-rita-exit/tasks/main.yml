@@ -60,8 +60,6 @@
     dest: /etc/rita-exit.toml
   become: true
 
-- include_tasks: systemd.yml
-
 - name: Open Rita port
   iptables:
     chain: INPUT
@@ -92,10 +90,29 @@
 - name: Tune sysctl limits
   lineinfile:
     path: /etc/sysctl.conf
-    line: "fs.file-max=1000000"
+    regexp: "^fs.file-max="
+    line: "fs.file-max=1073741824"
+    state: present
+  become: true
+
+- name: Tune process soft limit
+  lineinfile:
+    path: /etc/security/limits.conf
+    regexp: "^\\* soft"
+    line: "* soft nofile 500000"
+    state: present
+  become: true
+
+- name: Tune process hard limit
+  lineinfile:
+    path: /etc/security/limits.conf
+    regexp: "^\\* hard"
+    line: "* hard nofile 500000"
     state: present
   become: true
 
 - name: Reload sysctl
   shell: "sysctl -p"
   become: true
+
+- include_tasks: systemd.yml
