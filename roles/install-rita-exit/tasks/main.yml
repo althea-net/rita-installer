@@ -33,6 +33,14 @@
   become: true
   register: database
 
+- name: Backup database
+  fetch:
+    src: "{{database_dir}}/exit.db"
+    dest: "backup/{{ansible_fqdn}}/"
+    validate_checksum: yes
+  become: true
+  when: database.stat.exists
+
 - name: Copy empty db
   get_url:
     url: "{{blank_db_url}}"
