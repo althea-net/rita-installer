@@ -60,7 +60,7 @@ hosts file.
 
 Once configured run
 
-> ansible-playbook -e @profiles/[your profile name or exit-example.yml] <-c local if running against localhost> -i <your hosts file or ci-hosts> install-exit.yml
+> ansible-playbook -e @profiles/[your profile name or exit-example.yml][-c local if running against localhost] -i \[your hosts file or ci-hosts] install-exit.yml
 
 To update the users or gateways list simply run again. Users should not be disrupted
 unless a new gateway was added. Even then the disruption should be very minor.
@@ -90,7 +90,7 @@ hosts file.
 
 Once configured run
 
-> ansible-playbook -e @profiles/[your profile name or example.yml] <-c local if running against localhost> -i <your hosts file or ci-hosts> install-intermediary.yml
+> ansible-playbook -e @profiles/[your profile name or example.yml][-c local if running against localhost] -i [your hosts file or ci-hosts] install-intermediary.yml
 
 To update the Rita version just run again after building a new binary and placing
 it in the same folder as the playbook
