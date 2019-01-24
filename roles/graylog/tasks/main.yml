@@ -74,7 +74,7 @@
     mode: 0755
     force: true
   become: true
-  when: not compressed_log_sink_bin.stat.exists and aggregator
+  when: aggregator and not compressed_log_sink_bin.stat.exists
 
 - name: Copy Compressed log sink binary
   copy:
@@ -82,7 +82,7 @@
     dest: /usr/bin/compressed_log_sink
     mode: 0755
   become: true
-  when: compressed_log_sink_bin.stat.exists and aggregator
+  when: aggregator and compressed_log_sink_bin.stat.exists
 
 - name: Copy over ssl keys
   copy:
@@ -128,4 +128,4 @@
       Output of `systemctl status compressed-log-sink`:
       {{ service_compressed_log_sink_status.stdout }}
       {{ service_compressed_log_sink_status.stderr }}
-  when: service_compressed_log_sink_status is failed and aggregator
+  when: aggregator and service_compressed_log_sink_status is failed
