@@ -13,3 +13,4 @@ internal_nat_ip: 172.168.0.254
 internal_netmasq: "16"
 wireguard_version: ""
 exit_price_wei: 300000
+system_chain: "Ethereum"
