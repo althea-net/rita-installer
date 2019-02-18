@@ -5,4 +5,8 @@ exit_registration_port: 4875
 bounty_port: 8888
 wg_start_port: 60000
 firewall_start_port: 59999
+<<<<<<< Updated upstream
 rita_bin_url: "https://github.com/althea-mesh/althea_rs/releases/download/Beta2RC6/rita"
+=======
+rita_bin_url: "https://github.com/althea-mesh/althea_rs/releases/download/v0.1.5/rita"
+>>>>>>> Stashed changes
