@@ -62,70 +62,67 @@
       {{ service_collector_sidecar_status.stderr }}
   when: service_collector_sidecar_status is failed
 
-- name: Check for compressed_log_sink bianry
-  local_action: stat path="{{playbook_dir}}/compressed_log_sink"
-  register: compressed_log_sink_bin
-  when: aggregator
-
-- name: Compressed log sink bin not present, download latest release
-  get_url:
-    url: "{{compressed_log_sink_bin_url}}"
-    dest: "/usr/bin/compressed_log_sink"
-    mode: 0755
-    force: true
-  become: true
-  when: aggregator and not compressed_log_sink_bin.stat.exists
-
-- name: Copy Compressed log sink binary
-  copy:
-    src: "{{playbook_dir}}/compressed_log_sink"
-    dest: /usr/bin/compressed_log_sink
-    mode: 0755
-  become: true
-  when: aggregator and compressed_log_sink_bin.stat.exists
-
-- name: Copy over ssl keys
-  copy:
-    src: "{{item}}"
-    dest: "/etc/{{item}}"
+- name: Enable rsyslog collection on port 514 for routers
+  lineinfile:
+    path: /etc/rsyslog.conf
+    line: "{{item}}"
   with_items:
-    - fullchain.pem
-    - privkey.pem
-  when: aggregator
+    - "$ModLoad imudp"
+    - "$UDPServerRun 514"
 
-- name: Template compressed log sink service file
-  template:
-    src: compressed_log_sink.service.j2
-    dest: /etc/systemd/system/compressed-log-sink.service
+- name: Open rsyslog port on wg_exit only
+  iptables:
+    chain: INPUT
+    destination_port: 514
+    in_interface: "wg_exit"
+    protocol: udp
+    ip_version: "{{item}}"
+    jump: ACCEPT
+    ctstate: NEW
   become: true
-  when: aggregator
+  with_items:
+    - ipv4
+    - ipv6
 
-- name: Set Compressed log sink to run on startup
-  systemd:
-    daemon_reload: yes
-    name: compressed-log-sink
-    state: restarted
+- name: Disable firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+  become: true
+  ignore_errors: true
+
+- name: Check iptables status
+  service:
+    name: "{{item}}"
+    state: started
     enabled: yes
   become: true
-  when: aggregator
+  with_items:
+    - iptables
+    - ip6tables
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora'
 
-- name: Wait for Quick crashes
-  pause:
-    seconds: 30
-  when: aggregator
+- name: save iptables rules
+  shell: "service {{item}} save"
+  become: true
+  with_items:
+    - iptables
+    - ip6tables
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora'
 
-- name: Check if compressed-log-sink is running
-  command: systemctl status compressed-log-sink
-  ignore_errors: yes
-  changed_when: false
-  register: service_compressed_log_sink_status
-  when: aggregator
+- name: save iptables rules
+  shell: "{{item}}"
+  become: true
+  with_items:
+    - "iptables-save > /etc/iptables/rules.v4"
+    - "ip6tables-save > /etc/iptables/rules.v6"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- name: Report status of compressed_log_sink
-  fail:
-    msg: |
-      Service compressed-log-sink is not running.
-      Output of `systemctl status compressed-log-sink`:
-      {{ service_compressed_log_sink_status.stdout }}
-      {{ service_compressed_log_sink_status.stderr }}
-  when: aggregator and service_compressed_log_sink_status is failed
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: true
+  become: true
+  ignore_errors: true
