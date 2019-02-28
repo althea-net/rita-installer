@@ -5,10 +5,12 @@
   user: root
   vars:
     enterprise: true
+    standalone: false
   roles:
     - install-deps
     - install-babel
     - install-wireguard
+    - { role: postgresql, when: standalone }
     - install-rita-exit
     - security
     - logrotate

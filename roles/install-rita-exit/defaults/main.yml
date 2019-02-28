@@ -1,4 +1,3 @@
-database_dir: "/var/rita/"
 rita_port: 4876
 rita_dashboard_port: 4877
 exit_registration_port: 4875

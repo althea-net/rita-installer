@@ -21,34 +21,6 @@
   become: true
   when: rita_exit_bin.stat.exists
 
-- name: Create database dir
-  file:
-    path: "{{database_dir}}"
-    state: directory
-  become: true
-
-- name: Check for database
-  stat:
-    path: "{{database_dir}}/exit.db"
-  become: true
-  register: database
-
-- name: Backup database
-  fetch:
-    src: "{{database_dir}}/exit.db"
-    dest: "backup/{{ansible_fqdn}}/"
-    validate_checksum: yes
-  become: true
-  when: database.stat.exists
-
-- name: Copy empty db
-  get_url:
-    url: "{{blank_db_url}}"
-    dest: "{{database_dir}}/exit.db"
-    backup: yes
-  become: true
-  when: not database.stat.exists
-
 - name: Fail on nonsystemd systems
   fail:
     msg: "No support for non systemd services, please add support for your init system!"

@@ -1,4 +1,4 @@
-db_file = "{{database_dir}}exit.db"
+db_uri = "{{database_uri}}"
 Description = "{{description}}"
 allowed_countries = {{allowed_country_codes}}
 
@@ -37,6 +37,10 @@ exit_start_ip = "172.168.0.100"
 exit_price = {{exit_price_wei}}
 own_internal_ip = "{{internal_nat_ip}}"
 netmask = "{{internal_netmasq}}"
+entry_timeout = 7776000
+{% if region_lock_api_key is defined %}
+api_key = "{{region_lock_api_key}}"
+{% endif %}
 
 {% if mailer %}
 [mailer]
