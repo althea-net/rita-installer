@@ -1,6 +1,7 @@
 *.pem
 *.retry
 *.key
+*.crt
 hosts-*
 profiles/clatskine.yml
 profiles/test.yml

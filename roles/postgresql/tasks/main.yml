@@ -1,0 +1,115 @@
+# installs and configures a postgresql database with ssl authentication for exit servers
+
+- name: Install Debian deps
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{debian_deps}}"
+  when: ansible_distribution == 'Debian'
+  become: true
+
+- name: Install Ubuntu deps
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ubuntu_deps}}"
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+
+- name: Install Fedora deps
+  dnf:
+    name: "{{item}}"
+    state: present
+  with_items: "{{fedora_deps}}"
+  when: ansible_distribution == 'Fedora'
+  become: true
+
+# default is so old as to be unsupported and unusable
+- name: Install Updated Postgres on CentOS/RHEL
+  yum:
+    name: "{{postgres_centos_repo}}"
+    state: latest
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  become: true
+
+- name: Install CentOS/RHEL deps
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{centos_deps}}"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  become: true
+
+- name: Install Archlinux Deps
+  pacman:
+    name: "{{item}}"
+    state: present
+  with_items: "{{arch_deps}}"
+  when: ansible_distribution == 'Archlinux'
+  become: true
+
+- name: Setup remote access with ssl auth
+  lineinfile:
+    path: "{{pg_path}}/pg_hba.conf"
+    line: "{{item}}"
+    state: present
+  become: true
+  with_items:
+    - "hostssl all             all             0.0.0.0/0               scram-sha-256"
+    - "hostssl all             all             ::/0                    scram-sha-256"
+
+- name: Copy over ssl keys
+  copy:
+    src: "{{item}}"
+    dest: "{{pg_path}}/{{item}}"
+  become: true
+  with_items:
+    - "server.crt"
+    - "server.key"
+
+- name: Set file permissions
+  file:
+    path: "{{pg_path}}/{{item}}"
+    mode: "og-rwx"
+  become: true
+  with_items:
+    - "server.crt"
+    - "server.key"
+
+- name: Set postgresql to run on startup
+  systemd:
+    name: "{{pg_service_name}}"
+    state: started
+    enabled: yes
+  become: true
+
+- name: Create database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{db_name}}"
+
+- name: Backup database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{db_name}}"
+    state: dump
+    target: /tmp/{{db_name}}.sql.gz
+
+- name: Donwload backup
+  fetch:
+    src: "/tmp/{{db_name}}.sql.gz"
+    dest: "backup/{{ansible_fqdn}}/"
+    validate_checksum: yes
+  become: true
+
+- name: Create user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{db_name}}"
+    name: "{{db_user}}"
+    password: "{{db_password}}"
+    priv: "CONNECT/{{db_name}}:ALL"
+    expires: infinity
