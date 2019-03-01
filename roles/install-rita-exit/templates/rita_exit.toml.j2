@@ -38,8 +38,11 @@ exit_price = {{exit_price_wei}}
 own_internal_ip = "{{internal_nat_ip}}"
 netmask = "{{internal_netmasq}}"
 entry_timeout = 7776000
-{% if region_lock_api_key is defined %}
-api_key = "{{region_lock_api_key}}"
+{% if geoip_api_key is defined %}
+geoip_api_key = "{{geoip_api_key}}"
+{% endif %}
+{% if geoip_api_user is defined %}
+geoip_api_user = "{{geoip_api_user}}"
 {% endif %}
 
 {% if mailer %}

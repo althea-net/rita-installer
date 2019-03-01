@@ -52,7 +52,7 @@
 
 - name: Wait for Quick crashes
   pause:
-    seconds: 30
+    seconds: 5
 
 - name: Check if Rita-exit is running
   command: systemctl status rita-exit
