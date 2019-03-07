@@ -58,12 +58,17 @@ smtp_username = "{{smtp_username}}"
 smtp_password = "{{smtp_password}}"
 test = false
 test_dir = ""
+balance_notification_interval = {{balance_notification_interval}}
 {% elif phone %}
 [verif_settings]
 type = "Phone"
 
 [verif_settings.contents]
-api_key = "{{phone_api_key}}"
+auth_api_key = "{{phone_auth_api_key}}"
+notification_number = "{{send_number}}"
+twillio_account_id = "{{twillio_account_id}}"
+twillio_auth_token = "{{twillio_auth_token}}"
+balance_notification_interval = {{balance_notification_interval}}
 {% else %}
 [verif_settings]
 type = "Off"
