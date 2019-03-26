@@ -8,6 +8,10 @@ Linux distributions.
 Eventually we will publish more traditional packages, right now this automates
 the installation process and system setup.
 
+If you are looking for somthing simple to spin up in a vm please use [The x86 OpenWrt image](https://github.com/althea-mesh/althea-firmware/releases/)
+it's a far more polished and complete package, this repo is primarily useful when you
+need to run Althea on a non-openwrt platform.
+
 ---
 
 ## Is this where I get Althea?
