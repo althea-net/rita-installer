@@ -20,9 +20,7 @@ rita_hello_port = {{rita_port}}
 rita_dashboard_port = {{rita_dashboard_port}}
 rita_tick_interval = 5
 bounty_port = {{bounty_port}}
-wg_private_key = "{{wg_private_key}}"
 wg_private_key_path = "/tmp/priv"
-wg_public_key = "{{wg_public_key}}"
 wg_start_port = {{wg_start_port}}
 peer_interfaces = []
 manual_peers = []
@@ -31,6 +29,9 @@ conf_link_local = true
 default_route = []
 
 [exit_network]
+wg_private_key_path = "/tmp/exit-priv"
+wg_private_key = "{{wg_private_key}}"
+wg_public_key = "{{wg_public_key}}"
 wg_tunnel_port = {{firewall_start_port}}
 exit_hello_port = "{{exit_registration_port}}"
 exit_start_ip = "172.168.0.100"
