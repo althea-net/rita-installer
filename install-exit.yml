@@ -3,9 +3,6 @@
 - name: Install Althea exit
   hosts: exit
   user: root
-  vars:
-    enterprise: true
-    standalone: false
   roles:
     - install-deps
     - install-babel
