@@ -6,8 +6,8 @@ After=babeld.service
 
 [Service]
 Type=simple
-TimeoutStartSec=10s
-RestartSec=10
+TimeoutStartSec=60
+RestartSec=60
 Restart=on-failure
 Environment=RUST_LOG=INFO
 ExecStart=/usr/bin/rita_exit --config=/etc/rita-exit.toml
