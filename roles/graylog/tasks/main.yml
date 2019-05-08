@@ -125,4 +125,20 @@
     state: restarted
     enabled: true
   become: true
-  ignore_errors: true
+
+- name: Exit Journalctl configs to prevent rate limiting
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    state: present
+    line: "{{item}}"
+    insertafter: '^[Journal]'
+  with_items:
+   - "RateLimitInterval=1s"
+   - "RateLimitBurst=1000000"
+
+- name: Restart systemd-journald
+  service:
+    name: systemd-journald
+    state: restarted
+    enabled: true
+  become: true
