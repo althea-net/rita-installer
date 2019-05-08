@@ -1,7 +1,7 @@
 # Handle log growth
 
 - name: Set log retention values for systemd
-  command: "journalctl --vacuum-size=500M"
+  command: "journalctl --vacuum-size=2G"
   become: true
   ignore_errors: true
 
@@ -25,7 +25,7 @@
     line: "{{item}}"
   with_items:
     - "$SystemLogRateLimitInterval 2"
-    - "$SystemLogRateLimitBurst 500"
+    - "$SystemLogRateLimitBurst 5000"
 
 - name: Restart rsyslog
   service:
