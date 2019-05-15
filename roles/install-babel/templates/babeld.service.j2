@@ -8,7 +8,7 @@ After=wiregaurd.service
 Type=simple
 TimeoutStartSec=60
 RestartSec=60
-Restart=on-failure
+Restart=always
 ExecStartPre=-/usr/bin/rm /var/run/babeld.pid
 ExecStart=/usr/bin/babeld -c /etc/babeld.conf lo
 

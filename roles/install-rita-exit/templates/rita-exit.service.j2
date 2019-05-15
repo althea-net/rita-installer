@@ -9,7 +9,7 @@ Type=simple
 TimeoutStartSec=60
 RestartSec=60
 LimitNOFILE=65536
-Restart=on-failure
+Restart=always
 Environment=RUST_LOG=INFO
 ExecStart=/usr/bin/rita_exit --config=/etc/rita-exit.toml
 
