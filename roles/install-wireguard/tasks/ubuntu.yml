@@ -7,8 +7,6 @@
 
 - name: Install wireguard
   apt:
-    name: "{{item}}{{wireguard_version}}"
+    name: "wireguard{{wireguard_version}}"
     update_cache: yes
   become: true
-  with_items:
-    - wireguard

@@ -2,9 +2,6 @@
 
 - name: Install wireguard
   pacman:
-    name: "{{item}}"
+    name: ["wireguard-dkms", "wireguard-tools"]
     state: present
   become: true
-  with_items:
-    - wireguard-dkms
-    - wireguard-tools
