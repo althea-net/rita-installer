@@ -78,3 +78,14 @@
     - "ip6tables-save > /etc/iptables/rules.v6"
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
+- name: Install fail2ban
+  package:
+    name: "fail2ban"
+    state: latest
+
+- name: Enable fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
+  become: true
