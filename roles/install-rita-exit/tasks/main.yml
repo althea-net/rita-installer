@@ -1,4 +1,4 @@
-# Sets up the babeld as a system service
+# Sets up rita exit as a system service
 
 - name: Check for Rita Exit bianry
   local_action: stat path="{{playbook_dir}}/rita_exit"
