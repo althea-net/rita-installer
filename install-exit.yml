@@ -7,9 +7,9 @@
     - install-deps
     - install-babel
     - install-wireguard
-    - { role: postgresql, when: standalone }
+    - { role: postgresql, when: standalone|bool }
     - install-rita-exit
     - security
     - logrotate
     - set-qdisc
-    - { role: graylog, when: enterprise }
+    - { role: graylog, when: enterprise|bool }
