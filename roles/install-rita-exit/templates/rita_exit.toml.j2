@@ -1,5 +1,6 @@
 db_uri = "{{database_uri}}"
-Description = "{{description}}"
+workers = "{{workers}}"
+description = "{{description}}"
 allowed_countries = {{allowed_country_codes}}
 
 [payment]
@@ -70,6 +71,7 @@ notification_number = "{{send_number}}"
 twillio_account_id = "{{twillio_account_id}}"
 twillio_auth_token = "{{twillio_auth_token}}"
 balance_notification_interval = {{balance_notification_interval}}
+balance_notification_body = "{{balance_notification_body}}"
 {% else %}
 [verif_settings]
 type = "Off"

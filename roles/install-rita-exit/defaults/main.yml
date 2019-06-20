@@ -12,3 +12,4 @@ internal_netmasq: "16"
 wireguard_version: ""
 exit_price_wei: 300000
 system_chain: "Ethereum"
+workers: 1
