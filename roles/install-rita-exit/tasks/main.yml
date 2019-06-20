@@ -67,11 +67,19 @@
     - ipv4
     - ipv6
 
-- name: Tune sysctl limits
+- name: Tune sysctl file limits
   lineinfile:
     path: /etc/sysctl.conf
     regexp: "^fs.file-max="
     line: "fs.file-max=1073741824"
+    state: present
+  become: true
+
+- name: Tune sysctl ephemeral port limits
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: "^net.ipv4.ip_local_port_range="
+    line: "net.ipv4.ip_local_port_range=8192 65535"
     state: present
   become: true
 
