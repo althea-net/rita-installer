@@ -5,4 +5,4 @@ exit_registration_port: 4875
 bounty_port: 8888
 wg_start_port: 60000
 firewall_start_port: 59999
-rita_bin_url: "https://github.com/althea-mesh/althea_rs/releases/download/Beta5RC5/rita"
+rita_bin_url: "https://github.com/althea-mesh/althea_rs/releases/download/Beta6RC4/rita"
