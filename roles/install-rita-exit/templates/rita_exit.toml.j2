@@ -28,11 +28,13 @@ manual_peers = []
 external_nic = "{{external_nic}}"
 conf_link_local = true
 default_route = []
+wg_private_key = "{{wg_private_key}}"
+wg_public_key = "{{wg_public_key}}"
 
 [exit_network]
 wg_private_key_path = "/tmp/exit-priv"
-wg_private_key = "{{wg_private_key}}"
-wg_public_key = "{{wg_public_key}}"
+wg_private_key = "{{wg_exit_private_key}}"
+wg_public_key = "{{wg_exit_public_key}}"
 wg_tunnel_port = {{firewall_start_port}}
 exit_hello_port = "{{exit_registration_port}}"
 exit_start_ip = "172.168.0.100"
