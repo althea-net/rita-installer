@@ -12,6 +12,7 @@ node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else 
 buffer_period = 3
 price_oracle_enabled = false
 system_chain = "{{system_chain}}"
+bridge_enabled = false
 
 [network]
 mesh_ip = "{{exit_mesh_ip}}"
