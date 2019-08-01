@@ -14,3 +14,4 @@ exit_price_wei: 300000
 max_fee: 20000000
 system_chain: "Ethereum"
 workers: 1
+entry_timeout: 7776000
