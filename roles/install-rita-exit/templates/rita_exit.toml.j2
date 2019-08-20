@@ -12,6 +12,7 @@ node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else 
 buffer_period = 3
 system_chain = "{{system_chain}}"
 bridge_enabled = false
+debt_limit_enabled = {{debt_limit}}
 
 [network]
 mesh_ip = "{{exit_mesh_ip}}"
