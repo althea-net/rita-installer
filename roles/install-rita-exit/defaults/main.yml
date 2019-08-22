@@ -15,4 +15,4 @@ max_fee: 20000000
 system_chain: "Ethereum"
 workers: 1
 entry_timeout: 7776000
-debt_limit: true
+debt_limit: "true"
