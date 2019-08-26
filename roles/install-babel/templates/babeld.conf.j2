@@ -2,12 +2,12 @@ local-port-readwrite 6872
 debug 0
 default hello-interval 1
 default enable-timestamps true
-{% if 'exit' in group_names and not primary %}
-default rxcost 500
-{% endif %}
 {% if 'exit' in group_names %}
 out ip {{exit_mesh_ip}}/128 allow
 redistribute ip {{exit_mesh_ip}}/128 allow
+{% if 'exit' in group_names and not primary %}
+redistribute ip {{exit_mesh_ip}} metric 1000
+{% endif %}
 redistribute local deny
 redistribute deny
 out deny
