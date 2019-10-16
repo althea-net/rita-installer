@@ -10,8 +10,8 @@ su root adm
 # keep 1 day worth of backlogs
 rotate 1
 
-# create new (empty) log files after rotating old ones
-create
+# copy the old log and truncate the current one, prevents file handle issues
+copytruncate
 
 # use date as a suffix of the rotated file
 dateext
