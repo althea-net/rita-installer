@@ -10,7 +10,7 @@ TimeoutStartSec=60
 RestartSec=60
 Restart=always
 ExecStartPre=-/usr/bin/rm /var/run/babeld.pid
-ExecStart=/usr/bin/babeld -c /etc/babeld.conf lo
+ExecStart=/usr/bin/babeld -c /etc/babeld.conf fake_interface
 
 [Install]
 WantedBy=default.target

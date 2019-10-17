@@ -13,7 +13,6 @@ redistribute local deny
 redistribute deny
 out deny
 {% elif 'intermediary' in group_names %}
-redistribute if lo deny
 redistribute eq 128 allow
 out eq 128 allow
 redistribute local deny
