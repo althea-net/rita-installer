@@ -16,3 +16,4 @@ system_chain: "Ethereum"
 workers: 1
 entry_timeout: 7776000
 debt_limit: "true"
+bridge_enabled: "false"
