@@ -1,25 +1,21 @@
 # Althea Installer
 
-This is the installer for Althea on general purpose Linux. Whereas the [Althea
-firmware](https://github.com/althea-mesh/althea-firmware) which is targeted at
-OpenWRT compatible routers this installer will work on normal deskop and server
-Linux distributions.
+This repo contains tools for setting up an Althea client/relay/gateway (here on known as a client)
+as well as an Althea exit server. The client softare is what the [Althea firmware](https://github.com/althea-mesh/althea-firmware) packges as a complete system image.
 
-Eventually we will publish more traditional packages, right now this automates
-the installation process and system setup.
+If you are looking for a simple client to spin up in a vm please use [The x86 OpenWrt image](https://github.com/althea-mesh/althea-firmware/releases/) as it's a much more polished package.
 
-If you are looking for somthing simple to spin up in a vm please use [The x86 OpenWrt image](https://github.com/althea-mesh/althea-firmware/releases/)
-it's a far more polished and complete package, this repo is primarily useful when you
-need to run Althea on a non-openwrt platform.
+This repo is useful for when you want to build your own client on a non-openwrt platform or when
+you want to setup your own exit server.
 
 ---
 
 ## Is this where I get Althea?
 
-If you just want Althea on your computer please download a release from
-our website once it becomes available. This page is for developers who want
-to help improve Althea. Or technically advanced users who want to try out cutting
-edge changes.
+Althea runs on home routers, not typically on normal computers. Please see [althea.net/firmware](https://althea.net/firmware) for a list of compatible devices and instructions.
+
+This repository is for technical users who want to setup their own exit or build a special purpose
+Althea client.
 
 ## Getting Started
 
@@ -51,27 +47,77 @@ of your exit server like so.
 
 ```
 [exit]
-server a
-server b
+1.1.1.1 description="My Exit Primary!" primary=True  wg_private_key="" wg_public_key=""
+2.2.2.2 description="My Exit Secondary!"               wg_private_key="" wg_public_key=""
+[exit:vars]
+eth_private_key = ""
+fee_multiplier = 20
+enterprise = true
+mailer=True
+email_address=""
+smtp_url=""
+smtp_domain=""
+smtp_username=""
+smtp_password=""
+balance_notification_interval=86400
+balance_notification_body="Your Althea router has a low balance! Your service will be slow until more funds are added. Visit althea.net/top-up"
+database_uri=""
+external_nic=""
+system_chain="Rinkeby"
+full_nodes=["https://rinkeby.infura.io/v3/174d2ebf288a452fab8a8f90eab57be7"]
+#system_chain="Ethereum"
+#full_nodes=["https://eth.althea.org:443", "https://mainnet.infura.io/v3/
+6b080f02d7004a8394444cdf232a7081"]
+#system_chain="Xdai"
+#full_nodes=["https://dai.althea.org:443"]
+exit_mesh_ip="fd00::xxxxx"
+wg_exit_public_key=""
+wg_exit_private_key=""
+allowed_country_codes="[]"
+exit_price_wei = 714000
+standalone = true
+entry_timeout = "86400"
+debt_limit = false
 ```
 
-You can then put some sort of load balancer in front of multiple servers. Optionally
-of course.
+There's a lot of data that goes into the hosts file for an exit. This configuration outlines
+a cluster of two exits with a primary and secondary failover. If you configure your gateway with
+a url containing multiple DNS entires for each server Althea clients will automatically connect and failover. Sadly the failover process isn't quite perfect and having active failover may somtimes create minor connection disruptions for the users.
 
-Profiles are variables files pulled into Ansible for easy customization of what
-the playbook will do. Edit `profiles/exit-example.yml' to match your needs. If you are running against localhost use the`-c local` option and put 'localhost' in your
-hosts file.
+If you don't want to run multiple servers simply remove that line.
 
-Once configured run
+next are authentication settings, I've included blank SMTP mail auth settings. If you leave mailer
+True you can fill out those details and have the exit send users emails to authorize. If you turn
+mailer to False it will disable authentication of new users.
 
-> ansible-playbook -e @profiles/[your profile name or exit-example.yml][-c local if running against localhost] -i \[your hosts file or ci-hosts] install-exit.yml
+Finally you need to generate another set of keys and uncomment the appropriate blockchain full nodes and settings. You must also select an arbitrary valid ipv6 address out of the fd00::/8 range
 
-To update the users or gateways list simply run again. Users should not be disrupted
-unless a new gateway was added. Even then the disruption should be very minor.
+I've left 'standalone' on, this should setup a local postgres server for you to use but it's not as well tested as having standalone false and using a postgres database uri.
+
+When setting up a new postgres database you'll need to run the migrations [here](https://github.com/althea-net/althea_rs/tree/master/exit_db)
+
+```
+# install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# install diesel
+cargo install diesel_cli
+# clone althea_rs
+git clone https://github.com/althea-net/althea_rs
+# run the migrations
+cd althea_rs/exit_db
+diesel migration run --database-url=""
+```
+
+Now that everything is finally configured you can run ansible to configure your exit server
+
+> ansible-playbook -i \[your hosts file] install-exit.yml
+
+To update the exit software simply run the playbook again, there will be a minor disruption
+for users
 
 ## Setting up an Althea node
 
-An Althea intermediary node will pass traffic for other users on the mesh
+An Althea client/relay node will pass traffic for other users on the mesh
 as well as provide secure internet acces over the mesh from a configured lan
 port. This also includes gateway functionality if you include an external_nic
 in the profile.
