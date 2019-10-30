@@ -115,6 +115,51 @@ Now that everything is finally configured you can run ansible to configure your 
 To update the exit software simply run the playbook again, there will be a minor disruption
 for users
 
+### Adding your new exit to an Althea client
+
+Currently we ship exits as part of the default config file in [the firmware](https://github.com/althea-net/althea-firmware/blob/master/roles/build-config/templates/rita.toml.j2#L29) but that's
+hardly the only way to configure one.
+
+You can manually edit the /etc/rita.toml file on a client and paste in a block like this
+
+```
+[exit_client.exits.test]
+registration_port = 4875
+description = "The Althea testing exit cluster. Unstable!"
+state = "New"
+[exit_client.exits.test.id]
+mesh_ip = "fd00::1337:1e0f"
+eth_address = "0x5aee3dff733f56cfe7e5390b9cc3a46a90ca1cfa"
+wg_public_key = "zgAlhyOQy8crB0ewrsWt3ES9SvFguwx5mq9i2KiknmA="
+```
+
+Replace the eth address with the public address of the private key you configured in the exit hosts file and the public key should be the value of `the wg_exit_public_key` likewise `mesh_ip`
+is the value of `exit_mesh_ip` as configured above. The description is arbitrary so put whatever you like.
+
+You can also use curl to directly insert a new exit
+
+```
+curl -vv -XPOST -H 'Content-Type: application/json' -d
+ "test_exit": {
+      "id": {
+        "mesh_ip": "fd00::1337:e4f",
+        "eth_address": "0xe4ad1f9aa23957d294d869b70fc8f28774df896e",
+        "wg_public_key": "1kKSpzdhI4kfqeMqch9I1bXqOUXeKN7EQBecVzW60ys=",
+      },
+      "registration_port": 4875,
+      "description": "An arbitrary testing exit",
+      "state": "New",
+    }
+192.168.10.1:4877/exits
+```
+
+Or even direct curl to a remote list of exits over https. This will load a file from the
+destination and extract a Json formatted list of exits (see the formatting of the previous request as an example).
+
+```
+curl 127.0.0.1:4877/exits/sync -H "Content-Type:application/json" -d '\{"url": "https://somewhere.safe"\}
+```
+
 ## Setting up an Althea node
 
 An Althea client/relay node will pass traffic for other users on the mesh
