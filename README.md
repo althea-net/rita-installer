@@ -52,7 +52,6 @@ of your exit server like so.
 [exit:vars]
 eth_private_key = ""
 fee_multiplier = 20
-enterprise = true
 mailer=True
 email_address=""
 smtp_url=""
