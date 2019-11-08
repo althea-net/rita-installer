@@ -83,3 +83,4 @@ oracle_enabled = false
 cache_timeout_seconds = 600
 node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 dao_addresses = []
+oracle_url = ""
