@@ -62,22 +62,14 @@
       {{ service_collector_sidecar_status.stderr }}
   when: service_collector_sidecar_status is failed
 
-- name: Enable rsyslog collection on port 514 for routers
-  lineinfile:
-    path: /etc/rsyslog.conf
-    line: "{{item}}"
-  with_items:
-    - "$ModLoad imudp"
-    - "$UDPServerRun 514"
-
-- name: Open rsyslog port on wg_exit only
+- name: Close rsyslog port on wg_exit only
   iptables:
     chain: INPUT
     destination_port: 514
     in_interface: "wg_exit"
     protocol: udp
     ip_version: "{{item}}"
-    jump: ACCEPT
+    jump: REJECT
     ctstate: NEW
   become: true
   with_items:
