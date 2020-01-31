@@ -35,6 +35,12 @@
     dest: /etc/graylog/collector-sidecar/collector_sidecar.yml
   become: true
 
+- name: Template rsyslog config
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+  become: true
+
 - name: Set Collector-sidecar to run on startup
   systemd:
     daemon_reload: yes
@@ -123,10 +129,10 @@
     path: /etc/systemd/journald.conf
     state: present
     line: "{{item}}"
-    insertafter: '^[Journal]'
+    insertafter: "^[Journal]"
   with_items:
-   - "RateLimitInterval=1s"
-   - "RateLimitBurst=1000000"
+    - "RateLimitInterval=1s"
+    - "RateLimitBurst=1000000"
 
 - name: Restart systemd-journald
   service:
