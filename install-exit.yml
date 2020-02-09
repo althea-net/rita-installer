@@ -3,6 +3,7 @@
 - name: Install Althea exit
   hosts: exit
   user: root
+  serial: 1
   roles:
     - install-deps
     - install-babel
