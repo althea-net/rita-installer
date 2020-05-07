@@ -19,3 +19,5 @@ debt_limit: "true"
 bridge_enabled: "false"
 notify_low_balance: "true"
 nickname: "Althea Exit"
+# 400kbps, below netflix minimum
+free_tier_throughput: 400
