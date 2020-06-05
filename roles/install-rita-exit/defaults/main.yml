@@ -21,3 +21,4 @@ notify_low_balance: "true"
 nickname: "Althea Exit"
 # 400kbps, below netflix minimum
 free_tier_throughput: 400
+exit_direct_peer_interfaces: []
