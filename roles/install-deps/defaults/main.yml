@@ -16,7 +16,17 @@ debian_deps:
   - ipset
   - logrotate
 
-centos_deps:
+centos7_deps:
+  - iptables-services
+  - git
+  - openssl
+  - iproute
+  - ebtables
+  - ipset
+  - logrotate
+
+centos8_deps:
+  - iproute-tc
   - iptables-services
   - git
   - openssl
