@@ -104,3 +104,21 @@
   become: true
 
 - include_tasks: systemd.yml
+
+- name: Configure IPv6 settings for direct peer interfaces
+  lineinfile:
+    path: /etc/sysconfig/network-scripts/ifcfg-{{item[0]}}
+    state: present
+    regexp: "^%{{item[1].regex}}"
+    line: "{{item[1].line}}"
+    backup: yes
+  with_nested:
+    - "{{ exit_direct_peer_interfaces}}"
+    - [
+        { line: "IPV6INIT=yes", regex: "IPV6INIT" },
+        { line: "IPV6_AUTOCONF=no", regex: "IPV6_AUTOCONF" },
+        { line: "IPV6_DEFROUTE=no", regex: "IPV6_DEFROUTE" },
+        { line: "IPV6_FAILURE_FATAL=yes", regex: "IPV6_FAILURE_FATAL" },
+        { line: "IPV6_PEERDNS=no", regex: "IPV6_PEERDNS" },
+        { line: "ONBOOT=yes", regex: "ONBOOT" },
+      ]
