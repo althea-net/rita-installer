@@ -5,7 +5,7 @@ default enable-timestamps true
 {% if 'exit' in group_names %}
 out ip {{exit_mesh_ip}}/128 allow
 {% if 'exit' in group_names and not primary %}
-redistribute ip {{exit_mesh_ip}} metric 1000
+redistribute ip {{exit_mesh_ip}} metric 5000
 {% else %}
 redistribute ip {{exit_mesh_ip}}/128 allow
 {% endif %}
