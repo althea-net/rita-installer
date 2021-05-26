@@ -1,18 +1,16 @@
 ---
-
-- name: Download repo file
-  get_url:
-    url: "{{wireguard_rhel_repo}}"
-    dest: /etc/yum.repos.d/wireguard.repo
-  become: true
-
 - name: Install epel
   yum:
-    name: epel-release
+    name: epel-release,elrepo-release
     state: present
   become: true
 
 - name: Install wireguard
   yum:
-    name: ["wireguard-dkms{{wireguard_version}}", "wireguard-tools{{wireguard_version}}"]
+    name:
+      [
+        "kmod-wireguard{{wireguard_version}}",
+        "wireguard-tools{{wireguard_version}}",
+      ]
+    state: latest
   become: true
