@@ -13,4 +13,3 @@
     - security
     - logrotate
     - set-qdisc
-    - { role: graylog, when: enterprise|bool }
