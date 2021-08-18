@@ -69,8 +69,6 @@ smtp_username = "{{smtp_username}}"
 smtp_password = "{{smtp_password}}"
 test = false
 test_dir = ""
-balance_notification_interval = {{balance_notification_interval}}
-notify_low_balance = {{notify_low_balance}}
 {% elif phone %}
 [verif_settings]
 type = "Phone"
@@ -80,9 +78,6 @@ auth_api_key = "{{phone_auth_api_key}}"
 notification_number = "{{send_number}}"
 twillio_account_id = "{{twillio_account_id}}"
 twillio_auth_token = "{{twillio_auth_token}}"
-balance_notification_interval = {{balance_notification_interval}}
-balance_notification_body = "{{balance_notification_body}}"
-notify_low_balance = {{notify_low_balance}}
 {% else %}
 [verif_settings]
 type = "Off"

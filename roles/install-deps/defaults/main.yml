@@ -10,11 +10,11 @@ known_distros:
 debian_deps:
   - git
   - iptables-persistent
-  - libssl
-  - iproute
+  - iproute2
   - ebtables
   - ipset
   - logrotate
+  - wireguard
 
 centos7_deps:
   - iptables-services

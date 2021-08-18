@@ -122,3 +122,25 @@
         { line: "IPV6_PEERDNS=no", regex: "IPV6_PEERDNS" },
         { line: "ONBOOT=yes", regex: "ONBOOT" },
       ]
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Delete old interface configs for peer interfaces
+  file:
+    state: absent
+    path: /etc/network/interfaces.d/ifcfg-{{item}}
+  with_items: "{{ exit_direct_peer_interfaces}}"
+  when: ansible_distribution == 'Debian'
+
+- name: Configure IPv6 settings for direct peer interfaces
+  lineinfile:
+    path: /etc/network/interfaces.d/ifcfg-{{item}}
+    state: present
+    line: "iface {{item}} inet6 auto"
+    create: yes
+  with_items: "{{ exit_direct_peer_interfaces}}"
+  when: ansible_distribution == 'Debian'
+
+- name: set interfaces up
+  shell: ifup {{item}}
+  with_items: "{{ exit_direct_peer_interfaces}}"
+  when: ansible_distribution == 'Debian'

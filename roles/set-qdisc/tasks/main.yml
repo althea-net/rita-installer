@@ -1,6 +1,12 @@
 ---
-
 - name: "Set queue discipline to fq_codel"
   shell: "tc qdisc add dev {{external_nic}} root fq_codel flows 4096 target 500us interval 20ms limit 1000"
   become: true
   ignore_errors: true
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: "Set queue discipline to cake"
+  shell: "tc qdisc add dev {{external_nic}} root cake"
+  become: true
+  ignore_errors: true
+  when: ansible_distribution == 'Debian'
