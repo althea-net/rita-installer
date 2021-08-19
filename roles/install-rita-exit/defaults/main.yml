@@ -21,4 +21,5 @@ notify_low_balance: "true"
 nickname: "Althea Exit"
 free_tier_throughput: 3000
 exit_direct_peer_interfaces: []
+exit_direct_peer_vlans: []
 remote_log: "true"

@@ -124,13 +124,6 @@
       ]
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-- name: Delete old interface configs for peer interfaces
-  file:
-    state: absent
-    path: /etc/network/interfaces.d/ifcfg-{{item}}
-  with_items: "{{ exit_direct_peer_interfaces}}"
-  when: ansible_distribution == 'Debian'
-
 - name: Configure IPv6 settings for direct peer interfaces
   lineinfile:
     path: /etc/network/interfaces.d/ifcfg-{{item}}
@@ -140,7 +133,47 @@
   with_items: "{{ exit_direct_peer_interfaces}}"
   when: ansible_distribution == 'Debian'
 
+- name: Add the 802.1q module
+  shell: modprobe 8021q
+  become: true
+  when: ansible_distribution == 'Debian' and vlan_interface is defined
+
+- name: Configure IPv6 settings for vlan host interface
+  lineinfile:
+    path: /etc/network/interfaces.d/ifcfg-{{vlan_interface}}
+    state: present
+    line: "iface {{vlan_interface}} inet6 auto"
+    create: yes
+  when: ansible_distribution == 'Debian' and vlan_interface is defined
+
+- name: Set vlan host interface up
+  shell: ifup {{vlan_interface}}
+  when: ansible_distribution == 'Debian' and vlan_interface is defined
+
+- name: Configure IPv6 settings for direct peer vlans
+  lineinfile:
+    path: /etc/network/interfaces.d/ifcfg-{{item}}
+    state: present
+    line: "iface {{item}} inet6 auto"
+    create: yes
+  with_items: "{{ exit_direct_peer_vlans }}"
+  when: ansible_distribution == 'Debian'
+
+- name: Configure IPv6 settings for direct peer vlans
+  lineinfile:
+    path: /etc/network/interfaces.d/ifcfg-{{item}}
+    state: present
+    line: " vlan-raw-device {{ vlan_interface }}"
+    create: yes
+  with_items: "{{ exit_direct_peer_vlans }}"
+  when: ansible_distribution == 'Debian'
+
 - name: set interfaces up
   shell: ifup {{item}}
   with_items: "{{ exit_direct_peer_interfaces}}"
+  when: ansible_distribution == 'Debian'
+
+- name: set interfaces up
+  shell: ifup {{item}}
+  with_items: "{{ exit_direct_peer_vlans }}"
   when: ansible_distribution == 'Debian'
