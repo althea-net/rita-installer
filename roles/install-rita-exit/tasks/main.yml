@@ -67,6 +67,17 @@
     - ipv4
     - ipv6
 
+- name: Allow ping
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    ip_version: "{{item}}"
+    jump: ACCEPT
+  become: true
+  with_items:
+    - ipv4
+    - ipv6
+
 - name: Tune sysctl file limits
   lineinfile:
     path: /etc/sysctl.conf
