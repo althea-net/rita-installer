@@ -16,6 +16,7 @@ debian_deps:
   - logrotate
   - wireguard
   - vlan
+  - linux-headers-cloud-amd64
 
 centos7_deps:
   - iptables-services
