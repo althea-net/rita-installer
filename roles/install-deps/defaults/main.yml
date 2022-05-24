@@ -17,6 +17,7 @@ debian_deps:
   - wireguard
   - vlan
   - linux-headers-cloud-amd64
+  - libpq-dev
 
 centos7_deps:
   - iptables-services
