@@ -54,6 +54,9 @@ geoip_api_key = "{{geoip_api_key}}"
 {% if geoip_api_user is defined %}
 geoip_api_user = "{{geoip_api_user}}"
 {% endif %}
+{% if magic_phone_number is defined %}
+magic_phone_number = "{{magic_phone_number}}"
+{% endif %}
 
 {% if mailer %}
 [verif_settings]
