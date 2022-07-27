@@ -4,10 +4,16 @@ default hello-interval 1
 default enable-timestamps true
 {% if 'exit' in group_names %}
 out ip {{exit_mesh_ip}}/128 allow
+out ip {{exit_mesh_ip_v2}}/128 allow
 {% if 'exit' in group_names and not primary %}
 redistribute ip {{exit_mesh_ip}} metric 5000
 {% else %}
 redistribute ip {{exit_mesh_ip}}/128 allow
+{% endif %}
+{% if 'exit' in group_names and not primary %}
+redistribute ip {{exit_mesh_ip_v2}} metric 5000
+{% else %}
+redistribute ip {{exit_mesh_ip_v2}}/128 allow
 {% endif %}
 redistribute local deny
 redistribute deny

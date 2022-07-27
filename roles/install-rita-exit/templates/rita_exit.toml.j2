@@ -21,6 +21,7 @@ free_tier_throughput = {{free_tier_throughput}}
 nickname = "{{nickname}}"
 mesh_ip = "{{exit_mesh_ip}}"
 bounty_ip = "{{exit_mesh_ip}}"
+mesh_ip_v2 = "{{exit_mesh_ip_v2}}"
 babel_port = 6872
 rita_contact_port = 4874
 rita_hello_port = {{rita_port}}
@@ -67,7 +68,7 @@ magic_phone_number = "{{magic_phone_number}}"
 recompute_ipv6 = {{recompute_ipv6 | lower }}
 
 [[exit_network.cluster_exits]]
-mesh_ip = "{{exit_mesh_ip}}"
+mesh_ip = "{{exit_mesh_ip_v2}}"
 eth_address = "{{exit_cluster_eth_address}}"
 wg_public_key = "{{ wg_public_key }}"
 
