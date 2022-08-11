@@ -47,6 +47,10 @@ exit_start_ip = "172.168.0.100"
 exit_price = {{exit_price_wei}}
 own_internal_ip = "{{internal_nat_ip}}"
 netmask = {{internal_netmasq}}
+client_subnet_size = 60
+{% if ipv6_subnet is defined %}
+subnet =  "{{ipv6_subnet}}"
+{% endif %}
 entry_timeout = {{entry_timeout}}
 {% if geoip_api_key is defined %}
 geoip_api_key = "{{geoip_api_key}}"
