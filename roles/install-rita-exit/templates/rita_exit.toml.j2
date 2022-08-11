@@ -1,12 +1,12 @@
 db_uri = "{{database_uri}}"
-workers = "{{workers}}"
+workers = {{workers}}
 description = "{{description}}"
 allowed_countries = {{allowed_country_codes}}
 remote_log = {{remote_log}}
 
 [payment]
-max_fee = "{{max_fee}}"
-local_fee = "0"
+max_fee = {{max_fee}}
+local_fee = 0
 eth_private_key = "{{eth_private_key}}"
 node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 buffer_period = 3
@@ -42,11 +42,11 @@ wg_private_key_path = "/tmp/exit-priv"
 wg_private_key = "{{wg_exit_private_key}}"
 wg_public_key = "{{wg_exit_public_key}}"
 wg_tunnel_port = {{firewall_start_port}}
-exit_hello_port = "{{exit_registration_port}}"
+exit_hello_port = {{exit_registration_port}}
 exit_start_ip = "172.168.0.100"
 exit_price = {{exit_price_wei}}
 own_internal_ip = "{{internal_nat_ip}}"
-netmask = "{{internal_netmasq}}"
+netmask = {{internal_netmasq}}
 entry_timeout = {{entry_timeout}}
 {% if geoip_api_key is defined %}
 geoip_api_key = "{{geoip_api_key}}"
