@@ -18,6 +18,7 @@ debian_deps:
   - vlan
   - linux-headers-cloud-amd64
   - libpq-dev
+  - postgresql-client
 
 centos7_deps:
   - iptables-services
