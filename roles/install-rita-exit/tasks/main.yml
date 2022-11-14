@@ -1,6 +1,7 @@
 # Sets up rita exit as a system service
+- include_tasks: backup.yml
 
-- name: Check for Rita Exit bianry
+- name: Check for Rita Exit binary
   local_action: stat path="{{playbook_dir}}/rita_exit"
   register: rita_exit_bin
 

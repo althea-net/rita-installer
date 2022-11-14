@@ -1,0 +1,13 @@
+- name: restore backup Rita-Exit version
+  copy:
+    dest: /usr/bin/rita_exit
+    src: "{{playbook_dir}}/{{backup_dir}}/rita_exit/{{ inventory_hostname }}_{{ ansible_date_time.date }}/rita_exit"
+  become: true
+
+- name: restore backup config
+  copy:
+    dest: /etc/rita-exit.toml
+    src: "{{playbook_dir}}/{{backup_dir}}/config/{{ inventory_hostname }}_{{ ansible_date_time.date }}/rita-exit.toml"
+  become: true
+
+- include_tasks: systemd.yml

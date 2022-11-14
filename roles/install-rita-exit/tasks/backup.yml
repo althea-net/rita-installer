@@ -1,0 +1,29 @@
+- name: Create local backup directory
+  ansible.builtin.file:
+    path: "{{playbook_dir}}/{{backup_dir}}"
+    state: directory
+  delegate_to: localhost
+
+- name: Check for running version
+  ansible.builtin.stat:
+    path: /usr/bin/rita_exit
+  register: running_rita_exit
+
+- name: Backup running version Rita-Exit
+  fetch:
+    src: /usr/bin/rita_exit
+    dest: "{{playbook_dir}}/{{backup_dir}}/rita_exit/{{ inventory_hostname }}_{{ ansible_date_time.date }}/"
+    flat: true
+  when: running_rita_exit.stat.exists
+
+- name: Check for running config
+  ansible.builtin.stat:
+    path: /etc/rita-exit.toml
+  register: running_rita_exit_config
+
+- name: Backup running config file
+  fetch:
+    src: /etc/rita-exit.toml
+    dest: "{{playbook_dir}}/{{backup_dir}}/config/{{ inventory_hostname }}_{{ ansible_date_time.date }}/"
+    flat: true
+  when: running_rita_exit_config.stat.exists

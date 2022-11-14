@@ -11,8 +11,8 @@ eth_private_key = "{{eth_private_key}}"
 node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
 buffer_period = 3
 system_chain = "{{system_chain}}"
-bridge_enabled = {{bridge_enabled}}
-debt_limit_enabled = {{debt_limit}}
+bridge_enabled = {{bridge_enabled | lower }}
+debt_limit_enabled = {{debt_limit | lower }}
 apply_incoming_credit_immediately = true
 forgive_on_reboot = false
 free_tier_throughput = {{free_tier_throughput}}
@@ -42,6 +42,9 @@ wg_private_key_path = "/tmp/exit-priv"
 wg_private_key = "{{wg_exit_private_key}}"
 wg_public_key = "{{wg_exit_public_key}}"
 wg_tunnel_port = {{firewall_start_port}}
+{% if wg_v2_tunnel_port is defined %}
+wg_v2_tunnel_port = {{wg_v2_tunnel_port}}
+{% endif %}
 exit_hello_port = {{exit_registration_port}}
 exit_start_ip = "172.168.0.100"
 exit_price = {{exit_price_wei}}
@@ -61,6 +64,22 @@ geoip_api_user = "{{geoip_api_user}}"
 {% if magic_phone_number is defined %}
 magic_phone_number = "{{magic_phone_number}}"
 {% endif %}
+recompute_ipv6 = {{recompute_ipv6 | lower }}
+
+[[exit_network.cluster_exits]]
+mesh_ip = "{{exit_mesh_ip}}"
+eth_address = "{{exit_cluster_eth_address}}"
+wg_public_key = "{{ wg_public_key }}"
+
+{% if cluster_with is defined %}
+{%for exit in cluster_with %}
+[[exit_network.cluster_exits]]
+mesh_ip = "{{clustered_exits[exit].exit_cluster_mesh_ip}}"
+eth_address = "{{exit_cluster_eth_address}}"
+wg_public_key = "{{ clustered_exits[exit].exit_cluster_wg_public_key }}"
+
+{% endfor %}
+{% endif%}
 
 {% if mailer %}
 [verif_settings]

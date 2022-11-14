@@ -1,5 +1,5 @@
 ---
-- name: Check for Babel bianry
+- name: Check for Babel binary
   local_action: stat path="{{playbook_dir}}/babeld"
   register: babeld_bin
 

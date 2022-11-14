@@ -18,7 +18,7 @@
   with_items:
     - iptables
     - ip6tables
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora'
 
 - name: save iptables rules
   shell: "service {{item}} save"
@@ -26,7 +26,7 @@
   with_items:
     - iptables
     - ip6tables
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora'
 
 - name: save iptables rules
   shell: "{{item}}"
@@ -54,17 +54,23 @@
   pause:
     seconds: 5
 
-- name: Check if Rita-exit is running
-  command: systemctl status rita-exit
-  ignore_errors: yes
-  changed_when: false
-  register: service_rita_exit_status
+- name: upgrade success
+  block:
+    - name: Check if Rita-exit is running
+      command: systemctl status rita-exit
+      ignore_errors: true
+      changed_when: false
+      register: service_rita_exit_status
 
-- name: Report status of Rita-exit
-  fail:
-    msg: |
-      Service rita-exit is not running.
-      Output of `systemctl status rita-exit`:
-      {{ service_rita_exit_status.stdout }}
-      {{ service_rita_exit_status.stderr }}
-  when: service_rita_exit_status is failed
+    - name: Report status of Rita-exit
+      fail:
+        msg: |
+          Service rita-exit is not running.
+          Output of `systemctl status rita-exit`:
+          {{ service_rita_exit_status.stdout }}
+          {{ service_rita_exit_status.stderr }}
+      when: service_rita_exit_status is failed
+  rescue:
+    - name: trigger rollback
+      include_tasks: rollback.yml
+      when: service_rita_exit_status is failed
