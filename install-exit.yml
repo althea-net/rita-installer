@@ -10,6 +10,7 @@
     - install-wireguard
     - { role: postgresql, when: standalone|bool }
     - install-rita-exit
+    - install-trustdns
     - security
     - logrotate
     - set-qdisc

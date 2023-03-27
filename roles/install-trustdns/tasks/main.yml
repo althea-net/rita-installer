@@ -1,0 +1,87 @@
+---
+# This role installs trustdns to act as a recursive resolver for this exit server
+# incoming requests are only allowed on wg_exit and wg_exit_v2 right now this resolver
+# only handles port 53 legacy dns, not dnssec or dns over https
+
+# this is a trust dns binary built with the recusive resolver feature and using openssl vendored
+# on all dependencies so that we can build a musl version. Considering we don't use any ssl features
+# we could simply disable the default feature instead
+- name: download TrustDNS
+  get_url:
+    url: "{{trust_dns_bin_url}}"
+    dest: "/usr/bin/trust-dns"
+    mode: 0755
+    force: true
+  become: true
+  
+- name: create config directory
+  file:
+    path: "/etc/named"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Template config files
+  template:
+    src: "{{item}}"
+    dest: "/etc/named/{{item}}"
+  become: true
+  with_items:
+    - named.conf
+    - 0.zone
+    - 127.0.0.1.zone
+    - 255.zone
+    - ipv6_1.zone
+    - localhost.zone
+    - nonewline.zone
+    - root.zone
+
+- name: Open port 53 on wg_exit and wg_exit_v2
+  iptables:
+    chain: INPUT
+    destination_port: "53"
+    protocol: udp
+    ip_version: "{{item[0]}}"
+    jump: ACCEPT
+    ctstate: NEW
+    # very important, otherwise our server will be used
+    # for dns attacks
+    in_interface: "{{item[1]}}"
+  become: true
+  with_nested:
+    - ["ipv4", "ipv6"]
+    - ["wg_exit", "wg_exit_v2"]
+
+- name: Template trust-dns service
+  template:
+    src: trust-dns.j2
+    dest: /etc/systemd/system/trust-dns.service
+  become: true
+
+- name: Set trust-dns to run on startup
+  systemd:
+    daemon_reload: yes
+    name: trust-dns
+    state: restarted
+    enabled: yes
+  become: true
+
+- name: Wait for Quick crashes
+  pause:
+    seconds: 5
+
+- name: Check if trust-dns is running
+  command: systemctl status trust-dns
+  ignore_errors: true
+  changed_when: false
+  register: service_trust_dns_status
+
+- name: Report status of trust-dns
+  fail:
+    msg: |
+      Service trust-dns is not running.
+      Output of `systemctl status trust-dns`:
+      {{ service_trust_dns_status.stdout }}
+      {{ service_trust_dns_status.stderr }}
+  when: service_trust_dns_status is failed

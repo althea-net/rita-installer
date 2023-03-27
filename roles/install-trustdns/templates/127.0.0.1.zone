@@ -1,0 +1,11 @@
+; replace the {{root_domain}} with your own name
+$TTL 3D
+@               IN      SOA     {{root_domain}}. root.{{root_domain}}. (
+                                199609203       ; Serial
+                                28800   ; Refresh
+                                7200    ; Retry
+                                604800  ; Expire
+                                86400)  ; Minimum TTL
+                        NS      {{root_domain}}.
+
+1                       PTR     localhost.

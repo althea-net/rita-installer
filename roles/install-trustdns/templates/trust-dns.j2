@@ -1,0 +1,15 @@
+# This is a systemd service for trust dns
+[Unit]
+Description=trust-dns
+Requires=network.target
+
+[Service]
+Type=simple
+TimeoutStartSec=60
+RestartSec=60
+LimitNOFILE=65536
+Restart=always
+ExecStart=/usr/bin/trust-dns --config /etc/named/named.conf
+
+[Install]
+WantedBy=default.target
