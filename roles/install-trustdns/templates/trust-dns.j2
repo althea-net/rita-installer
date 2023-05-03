@@ -9,7 +9,7 @@ TimeoutStartSec=60
 RestartSec=60
 LimitNOFILE=65536
 Restart=always
-ExecStart=/usr/bin/trust-dns --config /etc/named/named.conf
+ExecStart=/usr/bin/trust-dns -q --config /etc/named/named.conf
 
 [Install]
 WantedBy=default.target
