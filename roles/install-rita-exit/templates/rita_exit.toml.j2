@@ -38,6 +38,11 @@ default_route = []
 wg_private_key = "{{wg_private_key}}"
 wg_public_key = "{{wg_public_key}}"
 
+[network.shaper_settings]
+enabled = {{shaper_enabled}}
+max_speed = 10000
+min_speed = 500
+
 [exit_network]
 wg_private_key_path = "/tmp/exit-priv"
 wg_private_key = "{{wg_exit_private_key}}"
