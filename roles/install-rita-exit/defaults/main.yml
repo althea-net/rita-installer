@@ -25,3 +25,4 @@ exit_direct_peer_vlans: []
 remote_log: "true"
 backup_dir: "backups"
 shaper_enabled: "false"
+enable_enforcement: "true"
