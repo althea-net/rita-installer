@@ -2,3 +2,15 @@ trust_dns_bin_url: "https://updates.althea.net/trust-dns"
 # this is not used by default, but if you wanted to use this as an authoritative server
 # you could fill this out with your own domain
 root_domain: "althea.net"
+# default list of dns servers to forward to
+dns_servers:
+  - "[2606:4700:4700::1001]"
+  - "[2606:4700:4700::1111]"
+  - "[2001:4860:4860::8888]"
+  - "[2001:4860:4860::8844]"
+  - "74.82.42.42"
+  - "1.1.1.1"
+  - "209.255.0.3"
+  - "9.9.9.9"
+  - "9.9.9.10"
+  - "64.6.64.6"
