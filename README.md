@@ -1,9 +1,9 @@
-# Althea Installer
+# Rita Installer
 
-This repo contains tools for setting up an Althea client/relay/gateway (here on known as a client)
-as well as an Althea exit server. The client softare is what the [Althea firmware](https://github.com/althea-mesh/althea-firmware) packges as a complete system image.
+This repo contains tools for setting up an Rita client/relay/gateway (here on known as a client)
+as well as an Althea exit server. The client softare is what the [Rita firmware](https://github.com/althea-net/rita-firmware) packges as a complete system image.
 
-If you are looking for a simple client to spin up in a vm please use [The x86 OpenWrt image](https://github.com/althea-mesh/althea-firmware/releases/) as it's a much more polished package.
+If you are looking for a simple client to spin up in a vm please use [The x86 OpenWrt image](https://github.com/althea-net/rita-firmware/releases/) as it's a much more polished package.
 
 This repo is useful for when you want to build your own client on a non-openwrt platform or when
 you want to setup your own exit server.
@@ -12,10 +12,10 @@ you want to setup your own exit server.
 
 ## Is this where I get Althea?
 
-Althea runs on home routers, not typically on normal computers. Please see [althea.net/firmware](https://althea.net/firmware) for a list of compatible devices and instructions.
+Rita runs on home routers that support OpenWRT, not typically on normal computers. 
 
 This repository is for technical users who want to setup their own exit or build a special purpose
-Althea client.
+Rita client.
 
 ## Getting Started
 
@@ -39,8 +39,7 @@ All other required software will be installed by the setup playbook
 
 ## Setting up an Exit server
 
-An Althea Exit server is essentially a WireGuard proxy server setup to integrate
-with the mesh network.
+An Rita Exit server is essentially a WireGuard proxy server setup to terminate traffic from a Rita network
 
 Create a file named `hosts` and populate it with the ip addreses
 of your exit server like so.
@@ -93,17 +92,17 @@ Finally you need to generate another set of keys and uncomment the appropriate b
 
 I've left 'standalone' on, this should setup a local postgres server for you to use but it's not as well tested as having standalone false and using a postgres database uri.
 
-When setting up a new postgres database you'll need to run the migrations [here](https://github.com/althea-net/althea_rs/tree/master/exit_db)
+When setting up a new postgres database you'll need to run the migrations [here](https://github.com/althea-net/rita/tree/master/exit_db)
 
 ```
 # install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # install diesel
 cargo install diesel_cli
-# clone althea_rs
-git clone https://github.com/althea-net/althea_rs
+# clone rita
+git clone https://github.com/althea-net/rita
 # run the migrations
-cd althea_rs/exit_db
+cd rita/exit_db
 diesel migration run --database-url=""
 ```
 
@@ -116,7 +115,7 @@ for users
 
 ### Adding your new exit to an Althea client
 
-Currently we ship exits as part of the default config file in [the firmware](https://github.com/althea-net/althea-firmware/blob/master/roles/build-config/templates/rita.toml.j2#L29) but that's
+Currently we ship exits as part of the default config file in [the firmware](https://github.com/althea-net/rita-firmware/blob/master/roles/build-config/templates/rita.toml.j2#L29) but that's
 hardly the only way to configure one.
 
 You can manually edit the /etc/rita.toml file on a client and paste in a block like this
@@ -159,10 +158,10 @@ destination and extract a Json formatted list of exits (see the formatting of th
 curl 127.0.0.1:4877/exits/sync -H "Content-Type:application/json" -d '\{"url": "https://somewhere.safe"\}
 ```
 
-## Setting up an Althea node
+## Setting up an Rita node
 
-An Althea client/relay node will pass traffic for other users on the mesh
-as well as provide secure internet acces over the mesh from a configured lan
+A Rita client/relay node will pass traffic for other users on the network
+as well as provide secure internet acces over the network from a configured lan
 port. This also includes gateway functionality if you include an external_nic
 in the profile.
 

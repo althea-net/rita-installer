@@ -1,16 +1,15 @@
 # Sets up an Althea exit node, which proxies traffic to the internet and bills for it
 
 - name: Install Althea exit
-  hosts: exit
+  hosts: all
   user: root
-  serial: 1
   roles:
-    - install-deps
-    - install-babel
-    - install-wireguard
-    - { role: postgresql, when: standalone|bool }
-    - install-rita-exit
+    #- install-deps
+    #- install-babel
+    #- install-wireguard
+    #- { role: postgresql, when: standalone|bool }
+    #- install-rita-exit
     - install-trustdns
-    - security
-    - logrotate
-    - set-qdisc
+    #- security
+    #- logrotate
+    #- set-qdisc

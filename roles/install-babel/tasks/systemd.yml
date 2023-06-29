@@ -9,16 +9,6 @@
   become: true
   ignore_errors: true
 
-- name: Check iptables status
-  service:
-    name: "{{item}}"
-    state: started
-    enabled: yes
-  become: true
-  with_items:
-    - iptables
-    - ip6tables
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Fedora' 
 
 - name: save iptables rules
   shell: "service {{item}} save"
