@@ -140,7 +140,7 @@
   lineinfile:
     path: /etc/network/interfaces.d/ifcfg-{{item}}
     state: present
-    line: "iface {{item}} inet6 auto"
+    line: "auto {{item}}"
     create: yes
   with_items: "{{ exit_direct_peer_interfaces}}"
   when: ansible_distribution == 'Debian'
