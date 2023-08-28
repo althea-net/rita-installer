@@ -87,6 +87,14 @@
     state: present
   become: true
 
+- name: Tune conntrack max
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: "^net.netfilter.nf_conntrack_max="
+    line: "net.netfilter.nf_conntrack_max=524288"
+    state: present
+  become: true
+
 - name: Tune sysctl ephemeral port limits
   lineinfile:
     path: /etc/sysctl.conf
