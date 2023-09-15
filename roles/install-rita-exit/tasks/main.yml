@@ -54,6 +54,7 @@
     - ["tcp", "udp"]
     - ["{{rita_port}}", "{{bounty_port}}", "{{exit_registration_port}}"]
     - ["ipv4", "ipv6"]
+  when: not container
 
 - name: Open WireGuard port range
   iptables:
@@ -67,6 +68,7 @@
   with_items:
     - ipv4
     - ipv6
+  when: not container
 
 - name: Allow ping
   iptables:
@@ -78,6 +80,7 @@
   with_items:
     - ipv4
     - ipv6
+  when: not container
 
 - name: Tune sysctl file limits
   lineinfile:

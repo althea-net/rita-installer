@@ -38,6 +38,7 @@
   with_nested:
     - ["tcp", "udp"]
     - ["ipv4", "ipv6"]
+  when: not container
 
 - name: Fail on nonsystemd systems
   fail:
