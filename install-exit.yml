@@ -4,12 +4,12 @@
   hosts: all
   user: root
   roles:
-    #- install-deps
-    #- install-babel
-    #- install-wireguard
-    #- { role: postgresql, when: standalone|bool }
-    #- install-rita-exit
+    - install-deps
+    - install-babel
+    - install-wireguard
+    - { role: postgresql, when: standalone|bool }
+    - install-rita-exit
     - install-trustdns
-    #- security
-    #- logrotate
-    #- set-qdisc
+    - security
+    - logrotate
+    - set-qdisc
