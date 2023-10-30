@@ -4,3 +4,4 @@ build_dir: "{{ansible_env.HOME}}/babeld"
 babeld_port: 6696
 babeld_bin_url: "https://github.com/althea-net/babeld/releases/download/0.1.6/babeld"
 primary: false
+container: false
