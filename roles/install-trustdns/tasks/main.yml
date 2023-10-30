@@ -59,6 +59,14 @@
     dest: /etc/systemd/system/trust-dns.service
   become: true
 
+- name: Disable systemd-resolvd
+  systemd:
+    daemon_reload: yes
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+  become: true
+
 - name: Set trust-dns to run on startup
   systemd:
     daemon_reload: yes
