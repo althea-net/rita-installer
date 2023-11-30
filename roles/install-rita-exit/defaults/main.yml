@@ -12,9 +12,8 @@ internal_netmasq: "16"
 wireguard_version: ""
 exit_price_wei: 300000
 max_fee: 20000000
-system_chain: "Ethereum"
+system_chain: "Xdai"
 workers: 1
-entry_timeout: 7776000
 debt_limit: "true"
 bridge_enabled: "false"
 notify_low_balance: "true"
@@ -26,3 +25,9 @@ remote_log: "true"
 backup_dir: "backups"
 shaper_enabled: "false"
 enable_enforcement: "true"
+# This endpoint is for a client registration server, when a client requests registration the request will
+# be forwarded to this server which has the permissions required to add a new user to the exit solidity contract
+# the server will verify the client via sms and then send an on chain tx to register them
+client_registration_url: "https://operator.althea.net:8080/register_router"
+# This is the Ethereum address of the registraton contract, currently this is on Gnosis chain
+registered_users_contract_addr: "0x29a3800C28dc133f864C22533B649704c6CD7e15"

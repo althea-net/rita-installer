@@ -1,8 +1,9 @@
-db_uri = "{{database_uri}}"
 workers = {{workers}}
 description = "{{description}}"
 allowed_countries = {{allowed_country_codes}}
 remote_log = {{remote_log}}
+client_registration_url = "{{client_registration_url}}"
+
 
 [payment]
 max_fee = {{max_fee}}
@@ -37,6 +38,7 @@ conf_link_local = true
 default_route = []
 wg_private_key = "{{wg_private_key}}"
 wg_public_key = "{{wg_public_key}}"
+payment_chains = ["{{system_chain}}"]
 
 [network.shaper_settings]
 enabled = {{shaper_enabled}}
@@ -60,7 +62,6 @@ client_subnet_size = 60
 {% if ipv6_subnet is defined %}
 subnet =  "{{ipv6_subnet}}"
 {% endif %}
-entry_timeout = {{entry_timeout}}
 {% if geoip_api_key is defined %}
 geoip_api_key = "{{geoip_api_key}}"
 {% endif %}
@@ -73,6 +74,7 @@ magic_phone_number = "{{magic_phone_number}}"
 recompute_ipv6 = {{recompute_ipv6 | lower }}
 pass = "{{exit_checkin_pass}}"
 enable_enforcement = {{enable_enforcement}}
+registered_users_contract_addr = "{{registered_users_contract_addr}}"
 
 [[exit_network.cluster_exits]]
 mesh_ip = "{{exit_mesh_ip_v2}}"
@@ -115,10 +117,3 @@ twillio_auth_token = "{{twillio_auth_token}}"
 [verif_settings]
 type = "Off"
 {% endif %}
-
-[dao]
-oracle_enabled = false
-cache_timeout_seconds = 600
-node_list = [{% for node in full_nodes %}"{{node}}"{{ "," if not loop.last else "" }}{% endfor %}]
-dao_addresses = []
-oracle_url = ""
