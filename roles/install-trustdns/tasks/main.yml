@@ -66,6 +66,7 @@
     state: stopped
     enabled: no
   become: true
+  ignore_errors: true
 
 - name: Set trust-dns to run on startup
   systemd:
