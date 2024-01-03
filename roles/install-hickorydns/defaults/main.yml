@@ -1,4 +1,4 @@
-trust_dns_bin_url: "https://updates.althea.net/trust-dns"
+hickory_dns_bin_url: "https://updates.althea.net/hickory-dns"
 # this is not used by default, but if you wanted to use this as an authoritative server
 # you could fill this out with your own domain
 root_domain: "althea.net"

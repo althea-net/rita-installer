@@ -6,10 +6,10 @@
 # this is a trust dns binary built with the recusive resolver feature and using openssl vendored
 # on all dependencies so that we can build a musl version. Considering we don't use any ssl features
 # we could simply disable the default feature instead
-- name: download TrustDNS
+- name: download HickoryDNS
   get_url:
-    url: "{{trust_dns_bin_url}}"
-    dest: "/usr/bin/trust-dns"
+    url: "{{hickory_dns_bin_url}}"
+    dest: "/usr/bin/hickory-dns"
     mode: 0755
     force: true
   become: true
@@ -52,11 +52,13 @@
   with_nested:
     - ["ipv4", "ipv6"]
     - ["wg_exit", "wg_exit_v2"]
+  ignore_errors: true
+  
 
-- name: Template trust-dns service
+- name: Template hickory-dns service
   template:
-    src: trust-dns.j2
-    dest: /etc/systemd/system/trust-dns.service
+    src: hickory-dns.j2
+    dest: /etc/systemd/system/hickory-dns.service
   become: true
 
 - name: Disable systemd-resolvd
@@ -68,10 +70,19 @@
   become: true
   ignore_errors: true
 
-- name: Set trust-dns to run on startup
+- name: Disable legacy trust-dns service
   systemd:
     daemon_reload: yes
     name: trust-dns
+    state: stopped
+    enabled: no
+  become: true
+  ignore_errors: true
+
+- name: Set hickory-dns to run on startup
+  systemd:
+    daemon_reload: yes
+    name: hickory-dns
     state: restarted
     enabled: yes
   become: true
@@ -80,17 +91,17 @@
   pause:
     seconds: 5
 
-- name: Check if trust-dns is running
-  command: systemctl status trust-dns
+- name: Check if hickory-dns is running
+  command: systemctl status hickory-dns
   ignore_errors: true
   changed_when: false
-  register: service_trust_dns_status
+  register: service_hickory_dns_status
 
-- name: Report status of trust-dns
+- name: Report status of hickory-dns
   fail:
     msg: |
-      Service trust-dns is not running.
-      Output of `systemctl status trust-dns`:
-      {{ service_trust_dns_status.stdout }}
-      {{ service_trust_dns_status.stderr }}
-  when: service_trust_dns_status is failed
+      Service hickory-dns is not running.
+      Output of `systemctl status hickory-dns`:
+      {{ service_hickory_dns_status.stdout }}
+      {{ service_hickory_dns_status.stderr }}
+  when: service_hickory_dns_status is failed

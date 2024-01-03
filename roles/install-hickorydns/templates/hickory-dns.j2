@@ -7,9 +7,12 @@ Requires=network.target
 Type=simple
 TimeoutStartSec=60
 RestartSec=60
-LimitNOFILE=65536
+LimitNOFILE=1000000
 Restart=always
-ExecStart=/usr/bin/trust-dns -q --config /etc/named/named.conf
+ExecStart=/usr/bin/hickory-dns --config /etc/named/named.conf
+# when loaded by strange external requests memory use may baloon
+MemoryMax=1G
+MemorySwapMax=0
 
 [Install]
 WantedBy=default.target
