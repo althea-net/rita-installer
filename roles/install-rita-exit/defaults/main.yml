@@ -14,6 +14,7 @@ exit_price_wei: 300000
 max_fee: 20000000
 system_chain: "Xdai"
 workers: 1
+entry_timeout: 0
 debt_limit: "true"
 bridge_enabled: "false"
 notify_low_balance: "true"
