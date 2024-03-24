@@ -48,6 +48,7 @@ ubuntu_deps:
   - ipset
   - ebtables
   - logrotate
+  - libpq-dev
 
 fedora_deps:
   - iptables-services

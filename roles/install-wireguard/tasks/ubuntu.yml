@@ -1,10 +1,5 @@
 ---
 
-- name: Add wireguard repo
-  apt_repository:
-    repo: "ppa:wireguard/wireguard"
-  become: true
-
 - name: Install wireguard
   apt:
     name: "wireguard{{wireguard_version}}"
